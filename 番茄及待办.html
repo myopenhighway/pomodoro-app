@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ff6b6b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <title>番茄专注 V4.8 - 后台防冻版</title>
+    <style>
+        /* === 样式与 V4.7 完全保持一致，无需改动 === */
+        :root {
+            --primary: #ff6b6b;
+            --primary-light: #ff7675;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text-main: #2d3436;
+            --text-sub: #b2bec3;
+            --border: #dfe6e9;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --sand-color: #ff9f43;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-main);
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .app-container {
+            width: 100%;
+            height: 100%;
+            max-width: 450px;
+            max-height: 800px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                width: 350px;
+                height: 640px;
+                border-radius: 35px;
+            }
+        }
+
+        /* --- 页面切换系统 --- */
+        .page {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            padding: 30px 24px;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .page.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .page::-webkit-scrollbar { width: 4px; }
+        .page::-webkit-scrollbar-thumb { background: #eee; border-radius: 4px; }
+
+        /* --- 计时器样式 --- */
+        .timer-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .status-text {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+            transition: opacity 0.5s;
+        }
+
+        .focus-badge {
+            background: #fff0f0;
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: opacity 0.5s, filter 0.5s;
+        }
+
+        .timer-display {
+            font-size: 5.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1;
+            font-feature-settings: "tnum";
+            margin: 10px 0;
+        }
+
+        .edit-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            height: 40px;
+            opacity: 1;
+            transition: all 0.4s ease;
+        }
+        .edit-area input {
+            width: 50px;
+            padding: 8px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-main);
+            outline: none;
+            touch-action: manipulation;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .edit-area input:focus { border-color: var(--primary); }
+
+        body.focus-mode .status-text { opacity: 0; }
+        body.focus-mode .edit-area { opacity: 0; height: 0; margin: 0; pointer-events: none; }
+        body.focus-mode .focus-badge { opacity: 0.5; filter: grayscale(30%); }
+
+        /* --- 沙漏样式 --- */
+        .hourglass-container {
+            width: 60px;
+            height: 80px;
+            margin: 20px auto; 
+            position: relative;
+            opacity: 0.9;
+        }
+
+        .glass {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            z-index: 2;
+        }
+        
+        .glass-top { top: 0; border-top: 35px solid #dfe6e9; }
+        .glass-bottom { bottom: 0; border-bottom: 35px solid #dfe6e9; }
+
+        .sand-wrapper {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 46px;
+            height: 76px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .sand-bulb {
+            width: 100%;
+            height: 35px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end; 
+        }
+        
+        .sand-bulb.top { clip-path: polygon(0 0, 100% 0, 50% 100%); }
+        .sand-bulb.bottom { clip-path: polygon(50% 0, 0 100%, 100% 100%); }
+
+        .sand {
+            background-color: var(--sand-color);
+            width: 100%;
+            /* 移除 transition，防止后台切回时动画乱跳，完全靠JS计算 */
+            /* transition: height 1s linear; */ 
+        }
+
+        /* --- 按钮 --- */
+        .btn-container { display: flex; gap: 15px; margin-top: 10px; }
+        .btn {
+            border: none; padding: 14px 32px; border-radius: 16px;
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            touch-action: manipulation;
+            min-height: 48px;
+        }
+        .btn:active { transform: scale(0.96); }
+        .btn:focus { outline: none; }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(255, 107, 107, 0.25); }
+        .btn-light { background: #f1f2f6; color: var(--text-main); }
+
+        .stats-bar {
+            margin-top: auto; display: flex; width: 100%;
+            justify-content: space-around; padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        .stat-item { text-align: center; }
+        .stat-val { display: block; font-size: 1.25rem; font-weight: bold; color: var(--text-main); }
+        .stat-label { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- Page 2: 任务 --- */
+        h2 { font-size: 1.3rem; margin: 0 0 20px 0; color: var(--text-main); }
+        .input-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        .input-box input {
+            flex: 1; padding: 12px 15px; border: 2px solid var(--border);
+            border-radius: 12px; outline: none; transition: 0.2s;
+        }
+        .input-box input:focus { border-color: var(--primary); }
+        
+        .task-list { list-style: none; padding: 0; margin: 0; }
+        .task-row {
+            background: #fff; border: 1px solid var(--border);
+            border-radius: 14px; padding: 12px 15px; margin-bottom: 10px;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: all 0.2s;
+        }
+        .task-row:hover { border-color: #d1d8e0; transform: translateY(-1px); }
+        .task-row.done .task-title { text-decoration: line-through; color: var(--text-sub); }
+        .task-row.done .task-check { background: #55efc4; border-color: #55efc4; color: white; }
+        
+        .task-check {
+            width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: transparent; margin-right: 12px;
+        }
+        .task-info { flex: 1; }
+        .task-title { font-weight: 500; font-size: 0.95rem; display: block; }
+        .task-meta { font-size: 0.75rem; color: var(--text-sub); margin-top: 3px; }
+        
+        .action-btn { background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 5px; color: #dfe6e9; transition: color 0.2s;}
+        .action-btn:hover { color: var(--primary); }
+        .play-icon { color: var(--primary); }
+
+        /* --- Page 3: 日历 --- */
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .month-label { font-size: 1.1rem; font-weight: bold; }
+        
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+            text-align: center; margin-bottom: 20px;
+        }
+        .day-name { font-size: 0.75rem; color: var(--text-sub); font-weight: 600; margin-bottom: 5px; }
+        .calendar-day {
+            height: 36px; display: flex; align-items: center; justify-content: center;
+            border-radius: 10px; font-size: 0.9rem; cursor: pointer;
+            position: relative; background: #fff; color: #636e72; transition: 0.2s;
+        }
+        .calendar-day:hover { background: #f1f2f6; }
+        .calendar-day.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4); }
+        
+        .calendar-day.has-data::after {
+            content: ''; position: absolute; bottom: 4px; width: 4px; height: 4px; 
+            background: var(--sand-color); border-radius: 50%;
+        }
+        .calendar-day.active.has-data::after { background: white; }
+
+        .day-detail {
+            border-top: 1px solid var(--border); padding-top: 15px; animation: fadeIn 0.3s;
+        }
+        .detail-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--text-main); }
+        .empty-state { text-align: center; color: var(--text-sub); font-size: 0.9rem; margin-top: 20px; }
+
+        /* --- 底部导航 --- */
+        .nav-bar {
+            height: 65px; background: var(--surface); border-top: 1px solid var(--border);
+            display: flex; justify-content: space-around; align-items: center; z-index: 10;
+        }
+        .nav-btn {
+            background: none; border: none; font-size: 1.4rem; color: #b2bec3; cursor: pointer; padding: 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+        }
+        .nav-btn span { font-size: 10px; font-weight: 600; }
+        .nav-btn.active { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div id="page-timer" class="page active">
+        <div class="timer-wrapper">
+            <div class="status-text">准备开始新挑战</div>
+            <div class="focus-badge" id="currentTaskDisplay">当前任务：自由专注</div>
+            <div class="timer-display" id="timerDisplay">45:00</div>
+            <div class="edit-area">
+                <span style="font-size:0.9rem; color:#888;">时长(分):</span>
+                <input type="number" id="durationInput" value="45" min="1" max="120" onchange="setDuration()">
+            </div>
+            
+            <div class="hourglass-container">
+                <div class="glass glass-top"></div>
+                <div class="glass glass-bottom"></div>
+                <div class="sand-wrapper">
+                    <div class="sand-bulb top">
+                        <div class="sand" id="sandTop" style="height: 100%;"></div>
+                    </div>
+                    <div class="sand-bulb bottom">
+                        <div class="sand" id="sandBottom" style="height: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-primary" id="mainBtn" onclick="toggleTimer()">开始</button>
+                <button class="btn btn-light" onclick="resetTimer()">重置</button>
+            </div>
+        </div>
+        <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val" id="todayTime">0m</span><span class="stat-label">今日专注</span></div>
+            <div class="stat-item"><span class="stat-val" id="focusCount">0</span><span class="stat-label">专注次数</span></div>
+        </div>
+    </div>
+
+    <div id="page-tasks" class="page">
+        <h2>📅 今日任务清单</h2>
+        <div class="input-box">
+            <input type="text" id="newTaskInput" placeholder="添加今天要完成的事...">
+            <button class="btn btn-primary" style="padding: 10px 20px;" onclick="addTask()">+</button>
+        </div>
+        <ul class="task-list" id="todayTaskList"></ul>
+        <div id="noTasksMsg" class="empty-state" style="display:none;">今天没有待办任务，享受生活吧！</div>
+    </div>
+
+    <div id="page-history" class="page">
+        <div class="calendar-header">
+            <span class="month-label" id="calendarLabel"></span>
+            <div style="font-size:0.8rem; color:#888;">● 有记录</div>
+        </div>
+        <div class="calendar-grid" style="margin-bottom:5px;">
+            <div class="day-name">日</div><div class="day-name">一</div><div class="day-name">二</div>
+            <div class="day-name">三</div><div class="day-name">四</div><div class="day-name">五</div><div class="day-name">六</div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <div id="dayDetailArea" class="day-detail" style="display:none;">
+            <div class="detail-header">
+                <span id="detailDate"></span><span style="color:var(--primary)" id="detailTotal"></span>
+            </div>
+            <ul class="task-list" id="historyTaskList"></ul>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn active" onclick="switchPage('timer', this)"><i>⏱</i><span>计时</span></button>
+        <button class="nav-btn" onclick="switchPage('tasks', this)"><i>📝</i><span>今日</span></button>
+        <button class="nav-btn" onclick="switchPage('history', this)"><i>📅</i><span>历史</span></button>
+    </div>
+</div>
+
+<script>
+    // --- 核心数据 ---
+    let appData = { tasks: [], dailyStats: {}, settings: { defaultTime: 45 }, currentTaskId: null };
+    
+    // --- 计时核心变量 (修改为时间戳机制) ---
+    let timerId = null;
+    let isRunning = false;
+    let timeLeft = 45 * 60; // 剩余秒数 (用于暂停时记录)
+    let totalSeconds = 45 * 60; // 总秒数 (用于计算沙漏比例)
+    let endTimeStamp = 0; // 核心：目标结束时间的时间戳
+
+    const todayStr = new Date().toLocaleDateString('en-CA');
+
+    loadData(); initUI();
+
+    // ================= 核心：时间戳防冻逻辑 =================
+
+    function setDuration() {
+        const val = parseInt(document.getElementById('durationInput').value);
+        if(val > 0) {
+            appData.settings.defaultTime = val; 
+            totalSeconds = val * 60;
+            if(!isRunning) { 
+                timeLeft = totalSeconds; 
+                updateUI();
+            }
+        }
+    }
+
+    function toggleTimer() { isRunning ? pauseTimer() : startTimer(); }
+
+    function startTimer() {
+        if(!isRunning) {
+            isRunning = true;
+            document.body.classList.add('focus-mode');
+            document.getElementById('mainBtn').textContent = '暂停';
+            document.getElementById('mainBtn').style.background = '#ff9f43';
+
+            // ★ 关键改动：设置绝对结束时间
+            // 现在的时刻 + 剩余的秒数 * 1000毫秒 = 目标结束时刻
+            endTimeStamp = Date.now() + (timeLeft * 1000);
+
+            // 启动定时器 (频率可以随意，因为不靠它计数)
+            timerId = setInterval(tick, 200); // 200ms 刷新一次UI更流畅
+        }
+    }
+
+    function tick() {
+        const now = Date.now();
+        // ★ 关键改动：剩余时间 = 目标时刻 - 现在时刻
+        const remainingMs = endTimeStamp - now;
+        
+        // 向上取整，防止 0.9秒 显示为 0
+        const remainingSeconds = Math.ceil(remainingMs / 1000);
+
+        if (remainingSeconds > 0) {
+            timeLeft = remainingSeconds; // 更新剩余时间用于暂停
+            updateUI();
+        } else {
+            timeLeft = 0;
+            updateUI();
+            finishTimer();
+        }
+    }
+
+    function pauseTimer() {
+        clearInterval(timerId); 
+        isRunning = false; 
+        document.body.classList.remove('focus-mode');
+        document.getElementById('mainBtn').textContent = '继续'; 
+        document.getElementById('mainBtn').style.background = '';
+        // 暂停时，timeLeft 已经被 tick() 更新为准确的剩余秒数，无需额外操作
+    }
+
+    function resetTimer() {
+        clearInterval(timerId);
+        isRunning = false;
+        document.body.classList.remove('focus-mode');
+        document.getElementById('mainBtn').textContent = '开始';
+        document.getElementById('mainBtn').style.background = '';
+        
+        timeLeft = totalSeconds;
+        updateUI();
+    }
+
+    function updateUI() {
+        // 1. 更新数字
+        const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+        const s = (timeLeft % 60).toString().padStart(2, '0');
+        document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+        document.title = `${m}:${s} - 专注中`;
+
+        // 2. 更新沙漏 (根据 timeLeft 和 totalSeconds 算比例)
+        // 无论后台多久，只要这一行运行，沙漏位置就是对的
+        const progress = timeLeft / totalSeconds; 
+        document.getElementById('sandTop').style.height = `${progress * 100}%`;
+        document.getElementById('sandBottom').style.height = `${(1 - progress) * 100}%`;
+    }
+
+    function finishTimer() {
+        clearInterval(timerId); // 停止计时
+        isRunning = false;
+        document.body.classList.remove('focus-mode');
+        document.getElementById('mainBtn').textContent = '开始';
+        document.getElementById('mainBtn').style.background = '';
+
+        // 复位时间，方便下次直接开始
+        timeLeft = totalSeconds;
+        updateUI();
+
+        // 统计逻辑
+        const duration = appData.settings.defaultTime;
+        if(!appData.dailyStats[todayStr]) appData.dailyStats[todayStr] = { count: 0, totalTime: 0 };
+        appData.dailyStats[todayStr].count++; 
+        appData.dailyStats[todayStr].totalTime += duration;
+        
+        if(appData.currentTaskId) {
+            const task = appData.tasks.find(t => t.id === appData.currentTaskId);
+            if(task) task.timeSpent += duration;
+        }
+        
+        saveData(); 
+        updateHomeStats(); 
+        renderTodayTasks(); 
+        alert('专注完成！休息一下。');
+    }
+
+    // ================= 任务 & 日历 (逻辑不变) =================
+
+    function addTask() {
+        const val = document.getElementById('newTaskInput').value.trim();
+        if(!val) return;
+        const task = { id: Date.now(), title: val, status: 'todo', createDate: todayStr, doneDate: null, timeSpent: 0 };
+        appData.tasks.push(task); 
+        document.getElementById('newTaskInput').value = '';
+        if(!appData.currentTaskId) selectTask(task.id);
+        saveData(); renderTodayTasks();
+    }
+
+    function toggleTaskStatus(id) {
+        const task = appData.tasks.find(t => t.id === id);
+        if(task) {
+            if(task.status === 'todo') { task.status = 'done'; task.doneDate = todayStr; }
+            else { task.status = 'todo'; task.doneDate = null; }
+            saveData(); renderTodayTasks();
+        }
+    }
+
+    function selectTask(id) {
+        appData.currentTaskId = id; saveData(); renderTodayTasks();
+        const task = appData.tasks.find(t => t.id === id);
+        document.getElementById('currentTaskDisplay').textContent = task ? `正在专注：${task.title}` : '当前任务：自由专注';
+    }
+
+    function deleteTask(id) {
+        if(confirm('删除此任务？')) {
+            appData.tasks = appData.tasks.filter(t => t.id !== id);
+            if(appData.currentTaskId === id) {
+                appData.currentTaskId = null;
+                document.getElementById('currentTaskDisplay').textContent = '当前任务：自由专注';
+            }
+            saveData(); renderTodayTasks();
+        }
+    }
+
+    function renderTodayTasks() {
+        const list = document.getElementById('todayTaskList'); list.innerHTML = '';
+        const visibleTasks = appData.tasks.filter(t => t.status === 'todo' || (t.status === 'done' && t.doneDate === todayStr));
+        document.getElementById('noTasksMsg').style.display = visibleTasks.length === 0 ? 'block' : 'none';
+        visibleTasks.forEach(task => {
+            const isDone = task.status === 'done';
+            const isActive = task.id === appData.currentTaskId;
+            const li = document.createElement('li');
+            li.className = `task-row ${isDone ? 'done' : ''}`;
+            if(isActive && !isDone) li.style.borderColor = 'var(--primary)';
+            li.innerHTML = `
+                <div class="task-check" onclick="toggleTaskStatus(${task.id})">${isDone ? '✔' : ''}</div>
+                <div class="task-info"><span class="task-title">${task.title}</span><div class="task-meta">累计: ${task.timeSpent}m</div></div>
+                ${!isDone ? `<button class="action-btn play-icon" onclick="selectTask(${task.id}); switchPage('timer')">▶</button>` : ''}
+                <button class="action-btn" onclick="deleteTask(${task.id})">🗑</button>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    function renderCalendar() {
+        const now = new Date(); const year = now.getFullYear(); const month = now.getMonth();
+        document.getElementById('calendarLabel').textContent = `${year}年 ${month+1}月`;
+        const grid = document.getElementById('calendarGrid'); grid.innerHTML = '';
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for(let i=0; i<firstDay; i++) grid.appendChild(document.createElement('div'));
+        for(let d=1; d<=daysInMonth; d++) {
+            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const cell = document.createElement('div');
+            cell.className = 'calendar-day'; cell.textContent = d;
+            
+            const stats = appData.dailyStats[dateStr];
+            const hasFocus = stats && stats.totalTime > 0;
+            const hasTasks = appData.tasks.some(t => t.createDate === dateStr || t.doneDate === dateStr);
+            
+            if(hasFocus || hasTasks) cell.classList.add('has-data');
+            if(dateStr === todayStr) cell.style.cssText = 'border: 1px solid var(--primary); color: var(--primary); font-weight:bold;';
+            
+            cell.onclick = () => showHistoryDetail(dateStr, cell);
+            grid.appendChild(cell);
+        }
+    }
+
+    function showHistoryDetail(dateStr, cell) {
+        document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('active'));
+        cell.classList.add('active');
+        document.getElementById('dayDetailArea').style.display = 'block';
+        
+        const stats = appData.dailyStats[dateStr] || { totalTime: 0 };
+        document.getElementById('detailDate').textContent = dateStr;
+        document.getElementById('detailTotal').textContent = `总专注: ${stats.totalTime}m`;
+        
+        const list = document.getElementById('historyTaskList'); list.innerHTML = '';
+        const tasks = appData.tasks.filter(t => t.doneDate === dateStr || (t.createDate === dateStr && t.status === 'todo'));
+        
+        if(stats.totalTime === 0 && tasks.length === 0) { list.innerHTML = '<div style="color:#ccc; text-align:center;">暂无记录</div>'; return; }
+        
+        tasks.forEach(t => {
+            const isDone = t.doneDate === dateStr;
+            list.innerHTML += `<li class="task-row ${isDone?'done':''}" style="padding:8px;"><span class="task-title" style="font-size:0.9rem;">${t.title}</span>${isDone?'<span style="font-size:0.75rem;color:#888;">已完成</span>':'<span style="font-size:0.75rem;color:#ff6b6b;">未完成</span>'}</li>`;
+        });
+    }
+
+    function switchPage(pid, btn) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-'+pid).classList.add('active');
+        if(btn) { document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+        if(pid === 'history') renderCalendar();
+    }
+
+    function updateHomeStats() {
+        const stats = appData.dailyStats[todayStr] || { count:0, totalTime:0 };
+        document.getElementById('todayTime').textContent = stats.totalTime + 'm';
+        document.getElementById('focusCount').textContent = stats.count;
+    }
+
+    function saveData() { localStorage.setItem('pomodoro_v4', JSON.stringify(appData)); }
+    function loadData() {
+        const d = localStorage.getItem('pomodoro_v4');
+        if(d) {
+            appData = JSON.parse(d);
+            document.getElementById('durationInput').value = appData.settings.defaultTime || 45;
+            totalSeconds = (appData.settings.defaultTime || 45) * 60; timeLeft = totalSeconds;
+        }
+        if(appData.currentTaskId) {
+            const t = appData.tasks.find(x => x.id === appData.currentTaskId);
+            document.getElementById('currentTaskDisplay').textContent = t ? `正在专注：${t.title}` : '当前任务：自由专注';
+        }
+        updateHomeStats();
+    }
+    function initUI() { renderTodayTasks(); updateUI(); }
+
+    // 当用户切回网页时，强制刷新一次，防止界面卡顿
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && isRunning) {
+            tick();
+        }
+    });
+
+    // 注册Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker注册成功:', registration.scope);
+                })
+                .catch(error => {
+                    console.log('ServiceWorker注册失败:', error);
+                });
+        });
+    }
+
+</script>
+</body>
+</html>
