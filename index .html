@@ -1,0 +1,4072 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#ff6b6b">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="番茄专注">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="自包含的番茄钟与今日待办，数据保存在本机浏览器。">
+    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAEwklEQVR42u3dWXLbMBREURKV3drLsdbr/GSoOJXY4ojX79wFJARw1WxQMLUuE/D+8vK+oDzr47Hefg0ERpLgK4mRJPdKYiTJvRIZSWIPMiPpYcBKZCSl9SAzktJ6JTKS0nqQGUlpPciMJKkHmZEk9SAzkqQeZEaS1IPMSJJ6kBlJUg/ThCSGdEZSSg8yI0lqlQP5lUM6o2pKDzIjSWqVA7mVQzqjekpLaORvCoHyQqsbSKgd30zHDt7ezvu3X1/Nr8oRIvMV/36y0OrGpLKR+unaIaFnl4zUKgcIDWQIrT8jqUdLaKgcAKEBQgOEBqEBQgOEBggNEPokrj6n7Fw0oWMkIzOhY6Qm8yZWh5MOZOvZZfISuqy8JCd0C4EJTugWIhOb0HESk5vQ0SITm9CRIhP7LzyHTnpNgFceNE7o9MVvmtaDzMYooS2ytJbQZDZ2CV1vQZ9Nw5mvjdDNZD5LEO+dJvRlYlwtRMIYCD2hCHdLkDYeQt+0+LMtfPLYCH3igs++2F3G2VroIxa52gJ3HPN/GGQuvrBHXHPQc+pB5oCUIvUv/E5hyu325zian7irn9B7FjDx0dWeMQV8GGpvCmeW+SvXduY1NP2g9zw+2uH0mfPQTdK500JvHWvh6jFayYz4Oe5VOTrehpuNuZ7Qqobq0T6h/Xl/mzmoJbTubM7bJ7R0bjUXXjQDQpe59UnnY+akUO2Q0JDQ0llKExogtN28OSI0JHRYf0bbtchLaHWj9VypHCA0QGigvdA2hNakdULPssn56qLPIEfYxlDluDvB3IUIHXc7JjWhAULPvFmS0oQGCA1CA4QGCF2YvV9QOCVIaIDQM6c0CP0Hlc9G3HXtYc+/5xa6auIlJ/XkY1M5zlz4Zxfft4W78bNuVyYaYSV0u9s16QkdJ8RVYwj88MwvdNoGq/tPMEvopqgehC4jwwxJF/qBkdA2iIQukWhkOHZuinR/CS2lJbSULtx3w38NQULbIErotulWfRwN6kstoVPTbOZxFZvzHpWjQjKdvUFssrmsJ3S1A/QzfDi3jr3gHbHXprDjN4jNHvvVFLr7k4ErJC06x3UTOrV6HClSo6rRs3IkSf3ZGJp+w1hb6D1Jkrzge8ZWvM7VT+hUqbemdGOZl8Ufyf4WoNpifrxeh5iCOvQRMs4oxL/GdYbMIU+OcjaFqVJ/HCOZ/8v6/vLybkM0+SK/vZ1XMcKe6ecJfXTSzrbgyWMj9IX14e7FTxsPoSfpxFeLkDAGQk8uxNliVLxmQodIvVeYma+N0KSeliYnFIcFNXYJLa2JLKEttDFKaGlNZAndVgAvrZHQEWlNZEJHiE1kQpeXm8SEjhCbyIQuLTiBtwm9LMtC6pslJ+8xMj8eqz+SlapReA4NQgNTC70+HqupQPX+LKGhcgAlhFY7UL1uSGioHEAZodUOVK4bEhr5lUNKo2o6/zOhSY2KMqscyK8cUhpV0/nThCY1KsmscqBP5ZDSqJbOX05oUqOCzE9VDlJjdpmf7tCkxswyb9oUkhqzyrxJaFJjVpk3C01qzCjzsvx40cxevKgGd4u8O6GlNWaT+bCEltaYJQzH7BcIMt+a0NIad4beZWlKbhJf8v/cMThykzhKaIIT+Cy+A9sEL0ASTmGkAAAAAElFTkSuQmCC">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAEwklEQVR42u3dWXLbMBREURKV3drLsdbr/GSoOJXY4ojX79wFJARw1WxQMLUuE/D+8vK+oDzr47Hefg0ERpLgK4mRJPdKYiTJvRIZSWIPMiPpYcBKZCSl9SAzktJ6JTKS0nqQGUlpPciMJKkHmZEk9SAzkqQeZEaS1IPMSJJ6kBlJUg/ThCSGdEZSSg8yI0lqlQP5lUM6o2pKDzIjSWqVA7mVQzqjekpLaORvCoHyQqsbSKgd30zHDt7ezvu3X1/Nr8oRIvMV/36y0OrGpLKR+unaIaFnl4zUKgcIDWQIrT8jqUdLaKgcAKEBQgOEBqEBQgOEBggNEPokrj6n7Fw0oWMkIzOhY6Qm8yZWh5MOZOvZZfISuqy8JCd0C4EJTugWIhOb0HESk5vQ0SITm9CRIhP7LzyHTnpNgFceNE7o9MVvmtaDzMYooS2ytJbQZDZ2CV1vQZ9Nw5mvjdDNZD5LEO+dJvRlYlwtRMIYCD2hCHdLkDYeQt+0+LMtfPLYCH3igs++2F3G2VroIxa52gJ3HPN/GGQuvrBHXHPQc+pB5oCUIvUv/E5hyu325zian7irn9B7FjDx0dWeMQV8GGpvCmeW+SvXduY1NP2g9zw+2uH0mfPQTdK500JvHWvh6jFayYz4Oe5VOTrehpuNuZ7Qqobq0T6h/Xl/mzmoJbTubM7bJ7R0bjUXXjQDQpe59UnnY+akUO2Q0JDQ0llKExogtN28OSI0JHRYf0bbtchLaHWj9VypHCA0QGigvdA2hNakdULPssn56qLPIEfYxlDluDvB3IUIHXc7JjWhAULPvFmS0oQGCA1CA4QGCF2YvV9QOCVIaIDQM6c0CP0Hlc9G3HXtYc+/5xa6auIlJ/XkY1M5zlz4Zxfft4W78bNuVyYaYSV0u9s16QkdJ8RVYwj88MwvdNoGq/tPMEvopqgehC4jwwxJF/qBkdA2iIQukWhkOHZuinR/CS2lJbSULtx3w38NQULbIErotulWfRwN6kstoVPTbOZxFZvzHpWjQjKdvUFssrmsJ3S1A/QzfDi3jr3gHbHXprDjN4jNHvvVFLr7k4ErJC06x3UTOrV6HClSo6rRs3IkSf3ZGJp+w1hb6D1Jkrzge8ZWvM7VT+hUqbemdGOZl8Ufyf4WoNpifrxeh5iCOvQRMs4oxL/GdYbMIU+OcjaFqVJ/HCOZ/8v6/vLybkM0+SK/vZ1XMcKe6ecJfXTSzrbgyWMj9IX14e7FTxsPoSfpxFeLkDAGQk8uxNliVLxmQodIvVeYma+N0KSeliYnFIcFNXYJLa2JLKEttDFKaGlNZAndVgAvrZHQEWlNZEJHiE1kQpeXm8SEjhCbyIQuLTiBtwm9LMtC6pslJ+8xMj8eqz+SlapReA4NQgNTC70+HqupQPX+LKGhcgAlhFY7UL1uSGioHEAZodUOVK4bEhr5lUNKo2o6/zOhSY2KMqscyK8cUhpV0/nThCY1KsmscqBP5ZDSqJbOX05oUqOCzE9VDlJjdpmf7tCkxswyb9oUkhqzyrxJaFJjVpk3C01qzCjzsvx40cxevKgGd4u8O6GlNWaT+bCEltaYJQzH7BcIMt+a0NIad4beZWlKbhJf8v/cMThykzhKaIIT+Cy+A9sEL0ASTmGkAAAAAElFTkSuQmCC">
+    <title>番茄专注</title>
+    <style>
+:root {
+    --primary: #ff6b6b;
+    --primary-light: #ff7675;
+    --pause: #ff9f43;
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --text-main: #2d3436;
+    --text-sub: #b2bec3;
+    --border: #dfe6e9;
+    --shadow: 0 10px 40px rgba(0,0,0,0.08);
+    --sand-color: #ff9f43;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.app-container {
+    width: 100%;
+    height: 100%;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    body {
+        align-items: center;
+        background: #e9ecef;
+        padding: 16px;
+    }
+    .app-container {
+        width: 390px;
+        height: 844px;
+        max-height: calc(100dvh - 32px);
+        border-radius: 36px;
+        box-shadow: var(--shadow), 0 0 0 1px rgba(0,0,0,0.04);
+    }
+}
+
+
+/* Short-screen media queries live at the end of this stylesheet so they win over base sizes. */
+
+/* --- Settings gear --- */
+.settings-btn {
+    position: absolute;
+    top: calc(var(--safe-top) + 4px);
+    right: calc(var(--safe-right) + 6px);
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: var(--text-sub);
+    border-radius: 12px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.settings-btn:active { background: #f1f2f6; color: var(--text-main); }
+.settings-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.settings-btn svg { width: 22px; height: 22px; }
+
+/* --- Pages --- */
+.page {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    padding: calc(52px + var(--safe-top)) 20px 16px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    animation: fadeIn 0.3s ease-out;
+    overscroll-behavior: contain;
+    min-height: 0;
+}
+.page.active { display: flex; }
+#page-timer {
+    overflow: hidden;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.page::-webkit-scrollbar { width: 4px; }
+.page::-webkit-scrollbar-thumb { background: #eee; border-radius: 4px; }
+
+/* --- Timer --- */
+.timer-wrapper {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.status-text {
+    color: var(--text-sub);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+    transition: opacity 0.5s;
+}
+
+.focus-badge {
+    background: #fff0f0;
+    color: var(--primary);
+    padding: 6px 10px 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+    transition: opacity 0.5s, filter 0.5s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+}
+.focus-badge #currentTaskText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 240px;
+}
+.clear-task-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--primary);
+    font-size: 1.2rem;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    touch-action: manipulation;
+    padding: 0;
+}
+.clear-task-btn:active { background: #ffd6d6; }
+.clear-task-btn[hidden] { display: none; }
+
+.timer-display {
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    margin: 8px 0;
+    flex-shrink: 0;
+}
+
+.edit-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    height: 44px;
+    flex-shrink: 0;
+    opacity: 1;
+    transition: all 0.4s ease;
+}
+.edit-area span { font-size: 0.9rem; color: #888; }
+.edit-area input {
+    width: 64px;
+    height: 44px;
+    padding: 8px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-main);
+    outline: none;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #fff;
+}
+.edit-area input:focus { border-color: var(--primary); }
+
+body.focus-mode .status-text { opacity: 0; height: 0; margin: 0; overflow: hidden; pointer-events: none; }
+body.focus-mode .edit-area { opacity: 0; height: 0; margin: 0; pointer-events: none; overflow: hidden; }
+body.focus-mode .focus-badge { opacity: 0.55; filter: grayscale(30%); }
+
+/* Hourglass (inline SVG) */
+.hourglass-container {
+    width: 110px;
+    height: 150px;
+    margin: 8px auto 12px;
+    position: relative;
+    flex-shrink: 1;
+    min-height: 64px;
+    transition: height 0.8s ease, width 0.8s ease, margin 0.8s ease, max-height 0.8s ease;
+}
+.hourglass-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    filter: drop-shadow(0 6px 10px rgba(45, 52, 54, 0.10));
+    transform-origin: 50% 52%;
+    transition: filter 0.45s ease;
+}
+.sand-flow { opacity: 0; pointer-events: none; }
+.hourglass-container.is-running .sand-flow { opacity: 1; }
+.hourglass-container.is-running .hg-grain-1 { animation: hgGrain 0.55s linear infinite; }
+.hourglass-container.is-running .hg-grain-2 { animation: hgGrain 0.55s linear infinite 0.18s; }
+.hourglass-container.is-running .hg-grain-3 { animation: hgGrain 0.55s linear infinite 0.36s; }
+.hourglass-container.is-running .hg-stream { animation: hgStream 0.5s ease-in-out infinite; }
+@keyframes hgGrain {
+    0% { transform: translateY(-2.5px); opacity: 0; }
+    25% { opacity: 1; }
+    80% { opacity: 0.9; }
+    100% { transform: translateY(7px); opacity: 0; }
+}
+@keyframes hgStream {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 1; }
+}
+@keyframes hgFlip {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(180deg); }
+}
+.hourglass-container.is-flipping .hourglass-svg {
+    animation: hgFlip 0.85s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.hourglass-container.is-glowing .hourglass-svg {
+    filter: drop-shadow(0 6px 10px rgba(45, 52, 54, 0.10)) drop-shadow(0 0 12px rgba(255, 159, 67, 0.75));
+}
+
+.btn-container { display: flex; gap: 12px; margin-top: 10px; width: 100%; justify-content: center; flex-shrink: 0; }
+.btn {
+    border: none;
+    padding: 14px 32px;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s, background 0.2s;
+    touch-action: manipulation;
+    min-height: 48px;
+    min-width: 48px;
+    font-family: inherit;
+}
+.btn:active { transform: scale(0.96); }
+.btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.btn-primary { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(255, 107, 107, 0.25); }
+.btn-pause { background: var(--pause); color: white; box-shadow: 0 8px 20px rgba(255, 159, 67, 0.25); }
+.btn-light { background: #f1f2f6; color: var(--text-main); }
+.btn-danger { background: var(--primary); color: #fff; }
+.btn-block { width: 100%; margin-top: 10px; }
+.btn-add {
+    padding: 0 16px;
+    min-width: 48px;
+    min-height: 44px;
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.stats-bar {
+    margin-top: auto;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding-top: 12px;
+    padding-bottom: 2px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}
+.stat-item { text-align: center; }
+.stat-val { display: block; font-size: 1.25rem; font-weight: bold; color: var(--text-main); }
+.stat-label { font-size: 0.75rem; color: var(--text-sub); letter-spacing: 1px; }
+
+/* --- Tasks --- */
+h2 { font-size: 1.3rem; margin: 0 0 16px 0; color: var(--text-main); }
+.input-box { display: flex; gap: 10px; margin-bottom: 16px; }
+.input-box input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 15px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    font-size: 16px;
+    min-height: 44px;
+    font-family: inherit;
+    background: #fff;
+}
+.input-box input:focus { border-color: var(--primary); }
+
+.task-list { list-style: none; padding: 0; margin: 0; }
+.task-row {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 8px 8px 8px 6px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.task-row.is-active { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.task-row.done .task-title { text-decoration: line-through; color: var(--text-sub); }
+.task-row.done .task-check { background: #55efc4; border-color: #55efc4; color: white; }
+
+.task-check {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    touch-action: manipulation;
+}
+.task-check span {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    font-size: 0.75rem;
+}
+.task-row.done .task-check span { background: #55efc4; border-color: #55efc4; color: white; }
+
+.task-info { flex: 1; min-width: 0; padding: 4px 4px 4px 0; }
+.task-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: block;
+    user-select: text;
+    -webkit-user-select: text;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.task-title-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: text;
+}
+.task-meta { font-size: 0.75rem; color: var(--text-sub); margin-top: 3px; }
+.title-edit {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 6px 8px;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: #b2bec3;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+}
+.action-btn:active { background: #f1f2f6; }
+.action-btn.play-icon { color: var(--primary); }
+.current-chip {
+    font-size: 0.65rem;
+    color: var(--primary);
+    background: #fff0f0;
+    padding: 1px 6px;
+    border-radius: 6px;
+    margin-left: 4px;
+    font-weight: 600;
+    vertical-align: 1px;
+}
+
+@media (hover: hover) {
+    .task-row:hover { border-color: #d1d8e0; }
+    .action-btn:hover { color: var(--primary); }
+    .calendar-day:hover { background: #f1f2f6; }
+}
+
+/* --- Calendar --- */
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 8px; }
+.month-nav { display: flex; align-items: center; gap: 2px; }
+.month-label { font-size: 1.1rem; font-weight: bold; min-width: 7.5em; text-align: center; }
+.month-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    color: var(--text-main);
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.month-btn:active { background: #f1f2f6; }
+.cal-legend { font-size: 0.8rem; color: #888; white-space: nowrap; }
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+.day-name { font-size: 0.75rem; color: var(--text-sub); font-weight: 600; margin-bottom: 4px; padding: 4px 0; }
+.calendar-day {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    position: relative;
+    background: #fff;
+    color: #636e72;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    touch-action: manipulation;
+}
+.calendar-day.is-today { border: 1px solid var(--primary); color: var(--primary); font-weight: bold; }
+.calendar-day.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4); }
+.calendar-day.has-data::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    width: 4px;
+    height: 4px;
+    background: var(--sand-color);
+    border-radius: 50%;
+}
+.calendar-day.active.has-data::after { background: white; }
+.calendar-day:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+
+.day-detail { border-top: 1px solid var(--border); padding-top: 15px; animation: fadeIn 0.3s; }
+.detail-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--text-main); gap: 8px; }
+.empty-state { text-align: center; color: var(--text-sub); font-size: 0.9rem; margin-top: 20px; }
+
+/* --- Nav --- */
+.nav-bar {
+    flex-shrink: 0;
+    min-height: 56px;
+    padding-bottom: var(--safe-bottom);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    z-index: 10;
+}
+.nav-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: #b2bec3;
+    cursor: pointer;
+    padding: 6px 8px 4px;
+    min-height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    touch-action: manipulation;
+    font-family: inherit;
+}
+.nav-btn span { font-size: 10px; font-weight: 600; }
+.nav-btn.active { color: var(--primary); }
+.nav-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: -4px; }
+
+/* --- Toast / modal / sheet --- */
+.toast {
+    position: absolute;
+    left: 50%;
+    bottom: calc(72px + var(--safe-bottom));
+    transform: translateX(-50%) translateY(10px);
+    background: #2d3436;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+    z-index: 60;
+    max-width: calc(100% - 40px);
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.mask {
+    position: absolute;
+    inset: 0;
+    background: rgba(45, 52, 54, 0.4);
+    z-index: 40;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+}
+.mask.show { display: flex; }
+.mask.center { align-items: center; padding: 24px; }
+
+.sheet {
+    width: 100%;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 8px 20px calc(20px + var(--safe-bottom));
+    animation: sheetUp 0.28s ease-out;
+    max-height: min(92dvh, 100%);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.sync-section {
+    margin: 18px 0 4px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+.sync-section h3 {
+    font-size: 1rem;
+    margin: 0 0 6px;
+    font-weight: 700;
+}
+.sync-help {
+    font-size: 0.82rem;
+    color: #636e72;
+    line-height: 1.55;
+    margin: 0 0 12px;
+}
+.sync-help a { color: var(--primary); }
+.sync-input {
+    width: 100%;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 12px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    margin: 0 0 8px;
+    background: #fff;
+    color: var(--text-main);
+}
+.sync-input:focus { outline: 2px solid rgba(255,107,107,0.35); border-color: transparent; }
+.sync-id-row { display: flex; gap: 8px; margin: 0 0 8px; }
+.sync-id-row .sync-input { margin: 0; flex: 1; min-width: 0; }
+.sync-id-row .btn { flex: 0 0 auto; padding: 8px 12px; min-height: 42px; }
+.sync-status {
+    font-size: 0.82rem;
+    color: #636e72;
+    margin: 10px 0 8px;
+    line-height: 1.5;
+    min-height: 1.3em;
+}
+.sync-status.is-ok { color: #2a9d5c; }
+.sync-status.is-warn { color: #c97a2c; }
+.sync-status.is-err { color: var(--primary); }
+.sync-actions { display: flex; flex-direction: column; gap: 8px; }
+.me-sync-status {
+    margin: 4px 0 0;
+    font-size: 0.78rem;
+    color: #8a9599;
+    line-height: 1.5;
+}
+.me-sync-status.is-ok { color: #2a9d5c; }
+.me-sync-status.is-warn { color: #c97a2c; }
+.me-sync-status.is-err { color: var(--primary); }
+
+@keyframes sheetUp {
+    from { transform: translateY(16px); opacity: 0.6; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.sheet-handle {
+    width: 36px;
+    height: 4px;
+    background: #dfe6e9;
+    border-radius: 4px;
+    margin: 8px auto 14px;
+}
+.sheet h2 { font-size: 1.15rem; margin-bottom: 8px; }
+.sheet-desc { font-size: 0.85rem; color: #636e72; margin: 0 0 8px; line-height: 1.5; }
+.sheet-foot { font-size: 0.75rem; color: var(--text-sub); text-align: center; margin: 16px 0 0; }
+
+.modal-card {
+    width: 100%;
+    max-width: 320px;
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px 20px 16px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+    animation: fadeIn 0.2s ease-out;
+}
+.modal-card p { margin: 0 0 18px; font-size: 1rem; line-height: 1.5; color: var(--text-main); }
+.modal-actions { display: flex; gap: 10px; }
+.modal-actions .btn { flex: 1; }
+
+
+/* --- Immersive focus --- */
+.app-container {
+    transition: background 0.8s ease;
+}
+body.immersive .app-container {
+    background:
+        radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.42) 100%),
+        linear-gradient(180deg, #2a3548 0%, #1c2535 55%, #141c28 100%);
+}
+body.immersive-instant .app-container,
+body.immersive-instant .app-container *,
+body.immersive-instant .app-container *::before,
+body.immersive-instant .app-container *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+}
+body.immersive .settings-btn,
+body.immersive .status-text,
+body.immersive .focus-badge,
+body.immersive .timer-display,
+body.immersive .edit-area,
+body.immersive .btn-container,
+body.immersive .stats-bar,
+body.immersive .nav-bar {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+body.immersive .status-text,
+body.immersive .focus-badge,
+body.immersive .timer-display,
+body.immersive .edit-area,
+body.immersive .btn-container,
+body.immersive .stats-bar {
+    max-height: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    border: 0;
+    flex: 0 0 0;
+}
+body.immersive .nav-bar {
+    min-height: 0;
+    height: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+}
+body.immersive #page-timer {
+    padding: 0;
+    overflow: hidden;
+}
+body.immersive .timer-wrapper {
+    height: 100%;
+    justify-content: center;
+}
+body.immersive #hourglass {
+    width: auto;
+    height: 50%;
+    max-height: 55%;
+    min-height: 0;
+    aspect-ratio: 110 / 152;
+    margin: 0 auto;
+    z-index: 25;
+    flex-shrink: 0;
+    transition: height 0.8s ease, width 0.8s ease, margin 0.8s ease, max-height 0.8s ease, filter 0.8s ease;
+}
+body.immersive #hourglass .hourglass-svg {
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,0.4)) drop-shadow(0 0 18px rgba(255, 176, 80, 0.42));
+    transition: filter 0.8s ease;
+}
+body.immersive #hourglass.is-glowing .hourglass-svg {
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,0.4)) drop-shadow(0 0 32px rgba(255, 186, 100, 0.9));
+}
+.immersive-hit {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 26;
+    background: transparent;
+}
+body.immersive .immersive-hit { display: block; }
+.immersive-controls {
+    position: absolute;
+    inset: 0;
+    z-index: 36;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: calc(28px + var(--safe-top)) 28px calc(32px + var(--safe-bottom));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.immersive-controls.is-visible {
+    opacity: 1;
+}
+.immersive-controls.is-visible .im-top,
+.immersive-controls.is-visible .im-actions {
+    pointer-events: auto;
+}
+.im-task {
+    text-align: center;
+    color: rgba(255,255,255,0.9);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.im-time {
+    text-align: center;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    margin-top: 10px;
+    letter-spacing: 0.12em;
+}
+.im-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+.im-btn {
+    min-width: 128px;
+    box-shadow: none;
+    color: #fff;
+}
+.im-pause {
+    background: #ff9f43;
+}
+.im-end {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.16);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.im-end:active { background: rgba(255,255,255,0.2); }
+
+.settings-btn,
+.nav-bar,
+.status-text,
+.focus-badge,
+.timer-display,
+.edit-area,
+.btn-container,
+.stats-bar {
+    transition: opacity 0.8s ease, visibility 0.8s ease, max-height 0.8s ease, height 0.8s ease, margin 0.8s ease, padding 0.8s ease;
+}
+
+/* Short-screen: shrink real boxes (must come after base .hourglass-container / typography). */
+@media (max-height: 740px) {
+    #page-timer { padding: calc(44px + var(--safe-top)) 16px 10px; }
+    .timer-display { font-size: 4.2rem; margin: 6px 0; }
+    .hourglass-container { width: 96px; height: 130px; margin: 6px auto 10px; }
+    .focus-badge { margin-bottom: 10px; }
+    .edit-area { margin-bottom: 12px; }
+    .stats-bar { padding-top: 10px; }
+}
+@media (max-height: 620px) {
+    #page-timer { padding: calc(36px + var(--safe-top)) 14px 8px; }
+    .status-text { margin-bottom: 6px; font-size: 0.82rem; }
+    .timer-display { font-size: 3.2rem; margin: 4px 0; }
+    .hourglass-container { width: 78px; height: 106px; margin: 4px auto 8px; }
+    .btn { min-height: 44px; padding: 10px 24px; }
+    .edit-area { height: 36px; margin-bottom: 8px; }
+    .edit-area input { height: 36px; }
+    .focus-badge { margin-bottom: 8px; }
+    .stats-bar { padding-top: 8px; }
+    .stat-val { font-size: 1.1rem; }
+}
+@media (max-height: 540px) {
+    #page-timer { padding: calc(28px + var(--safe-top)) 12px 4px; }
+    .status-text { height: 0; margin: 0; overflow: hidden; opacity: 0; }
+    .timer-display { font-size: 2.4rem; margin: 2px 0; }
+    .hourglass-container { width: 58px; height: 80px; margin: 2px auto 4px; min-height: 56px; }
+    .btn-container { margin-top: 4px; }
+    .btn { min-height: 42px; padding: 8px 20px; }
+    .focus-badge { margin-bottom: 4px; font-size: 0.82rem; padding: 4px 8px 4px 12px; }
+    .edit-area { height: 32px; margin-bottom: 4px; }
+    .edit-area input { height: 32px; }
+    .stats-bar { padding-top: 6px; padding-bottom: 0; }
+    .stat-val { font-size: 1.05rem; }
+    body.immersive #hourglass { height: 48%; max-height: 52%; }
+}
+
+
+/* --- Four-tab nav: keep labels on one line at ~370px --- */
+.nav-btn { min-width: 0; padding: 6px 2px 4px; }
+.nav-btn > span:first-child { font-size: 1.2rem !important; }
+.nav-btn > span:last-child { font-size: 10px; font-weight: 600; white-space: nowrap; }
+
+/* Immersive: empty lower glass more transparent, cool tint, brighter highlights */
+body.immersive #hg-glass-fill stop:nth-child(1) { stop-color: #eef9ff; stop-opacity: 0.14; }
+body.immersive #hg-glass-fill stop:nth-child(2) { stop-color: #b9e4f4; stop-opacity: 0.045; }
+body.immersive #hg-glass-fill stop:nth-child(3) { stop-color: #8ecce4; stop-opacity: 0.03; }
+body.immersive .hg-glass-stroke { stroke: #c9ebf7; stroke-opacity: 0.42; }
+body.immersive .hg-hi-top { opacity: 0.92; }
+body.immersive .hg-hi-bot { opacity: 0.78; }
+body.immersive .hg-hi-right { stroke: #e7f7ff; opacity: 0.22; }
+
+/* --- Rest hourglass --- */
+body.resting .app-container {
+    background: linear-gradient(180deg, #f3fbfc 0%, #eef6f8 55%, #e8f2f4 100%);
+}
+body.resting #hg-sand-top stop:nth-child(1) { stop-color: #f3fdff; }
+body.resting #hg-sand-top stop:nth-child(2) { stop-color: #c8f0f8; }
+body.resting #hg-sand-top stop:nth-child(3) { stop-color: #9adcec; }
+body.resting #hg-sand stop:nth-child(1) { stop-color: #e6fbff; }
+body.resting #hg-sand stop:nth-child(2) { stop-color: #b5eaf4; }
+body.resting #hg-sand stop:nth-child(3) { stop-color: #7ed0e2; }
+body.resting #hg-sand stop:nth-child(4) { stop-color: #5bb8cc; }
+body.resting #hg-flow stop:nth-child(1) { stop-color: #d8f6fc; stop-opacity: 0; }
+body.resting #hg-flow stop:nth-child(2) { stop-color: #8ad4e6; }
+body.resting #hg-flow stop:nth-child(3) { stop-color: #5bb8cc; stop-opacity: 0.2; }
+body.resting .hg-grain-1 { fill: #b5eaf4; }
+body.resting .hg-grain-2 { fill: #7ed0e2; }
+body.resting .hg-grain-3 { fill: #5bb8cc; }
+body.resting .timer-display { color: #3a7d8c; }
+body.resting .edit-area,
+body.resting #resetBtn,
+body.resting .status-text,
+body.resting .focus-badge { display: none; }
+.rest-msg {
+    display: none;
+    margin: 4px 0 0;
+    text-align: center;
+    color: #5a8a96;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+body.resting .rest-msg { display: block; }
+body.resting .btn-primary,
+body.resting #mainBtn { background: #6cb6c6; box-shadow: 0 6px 16px rgba(90, 170, 186, 0.28); }
+
+/* --- Calendar HP ticks --- */
+.calendar-day {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 7px 3px 5px;
+    min-height: 48px;
+    gap: 0;
+}
+.cal-num { line-height: 1.2; }
+.cal-hp {
+    display: block;
+    width: 72%;
+    height: 3px;
+    margin-top: auto;
+    border-radius: 2px;
+    background: #eef1f3;
+    overflow: hidden;
+    align-self: center;
+}
+.calendar-day:not(.has-hp) .cal-hp { visibility: hidden; }
+.cal-hp-fill { display: block; height: 100%; border-radius: 2px; }
+.calendar-day.has-data::after { bottom: 9px; }
+.calendar-day.has-hp.has-data::after { display: none; }
+.calendar-day.active .cal-hp { background: rgba(255,255,255,0.35); }
+.calendar-day.is-today .cal-hp { background: #fde8e8; }
+.detail-review {
+    margin: 0 0 12px;
+    padding: 12px 14px;
+    background: #f7f8fa;
+    border-radius: 14px;
+}
+.detail-hp-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+.detail-hp-score { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em; }
+.detail-hp-bar {
+    flex: 1;
+    height: 8px;
+    border-radius: 8px;
+    background: #eceff1;
+    overflow: hidden;
+}
+.detail-hp-bar > span { display: block; height: 100%; border-radius: inherit; }
+.detail-dims { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.detail-note { font-size: 0.9rem; color: #636e72; line-height: 1.55; margin: 4px 0 0; }
+.detail-rate-btn {
+    margin-top: 10px;
+    border: none;
+    background: none;
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* --- Settings sheet extras --- */
+.sheet-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 14px 0 8px;
+    font-size: 0.92rem;
+    color: var(--text-main);
+}
+.sheet-row input[type="number"] {
+    width: 72px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1rem;
+    font-family: inherit;
+}
+.sheet-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #636e72;
+    margin: 4px 0 12px;
+    cursor: pointer;
+}
+.sheet-check input { width: 18px; height: 18px; accent-color: var(--primary); }
+
+/* --- Me page --- */
+#page-me { padding: calc(44px + var(--safe-top)) 20px 20px; }
+.me-section { margin-bottom: 16px; }
+.me-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--text-sub);
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+.me-title {
+    font-size: 1.2rem;
+    margin: 0 0 8px;
+    color: var(--text-main);
+    font-weight: 700;
+}
+.me-date-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 10px;
+}
+.me-date-nav .month-btn { flex: 0 0 auto; }
+.me-date-wrap {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    height: 36px;
+}
+#hpDateLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+}
+.me-date-wrap input[type="date"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    font-size: 1.2rem;
+}
+.me-today-link {
+    border: none;
+    background: none;
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 4px 2px;
+    white-space: nowrap;
+}
+.me-ref {
+    font-size: 0.82rem;
+    color: #8a9599;
+    margin: 0 0 14px;
+}
+.hp-score-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.hp-score {
+    font-size: 2.85rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+.hp-unit { font-size: 0.95rem; color: var(--text-sub); font-weight: 600; }
+.hp-track {
+    position: relative;
+    width: 100%;
+    height: 22px;
+    border-radius: 999px;
+    background: #eef1f3;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+    touch-action: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+.hp-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: inherit;
+    background-image: linear-gradient(90deg, #ff6b6b 0%, #ffc048 48%, #3dcf7a 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.45);
+    transition: width 0.08s linear;
+}
+@media (prefers-reduced-motion: reduce) {
+    .hp-fill { transition: none; }
+}
+.hp-shine {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 45%;
+    border-radius: 999px 999px 40% 40%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0));
+    pointer-events: none;
+}
+.dim-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 12px;
+}
+.dim-chip {
+    border: 1px solid var(--border);
+    background: #fff;
+    color: #636e72;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    touch-action: manipulation;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 36px;
+}
+.dim-chip .star { font-size: 0.95rem; color: #dfe6e9; }
+.dim-chip.on {
+    border-color: #ffd8a8;
+    background: #fff7ec;
+    color: #c97a2c;
+}
+.dim-chip.on .star { color: #ff9f43; }
+.hp-note {
+    width: 100%;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    resize: none;
+    color: var(--text-main);
+    background: #fff;
+}
+.hp-note:focus { outline: 2px solid rgba(255,107,107,0.35); border-color: transparent; }
+.week-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 12px 0 8px;
+    font-size: 0.85rem;
+    color: #636e72;
+}
+.week-avg-num { font-weight: 700; color: var(--text-main); }
+.week-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 64px;
+}
+.week-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    min-width: 0;
+    height: 100%;
+    border: none;
+    background: none;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+    color: inherit;
+}
+.week-col-bar {
+    width: 100%;
+    max-width: 18px;
+    height: 46px;
+    border-radius: 4px 4px 2px 2px;
+    background: #eceff1;
+    position: relative;
+    overflow: hidden;
+    margin-top: auto;
+}
+.week-col-bar > span {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+}
+.week-col-lab { font-size: 0.68rem; color: var(--text-sub); }
+.week-col.is-today .week-col-lab { color: var(--primary); font-weight: 700; }
+.week-empty { font-size: 0.82rem; color: var(--text-sub); padding: 8px 0; }
+.me-save-status {
+    margin: 12px 0 0;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: #8a9599;
+}
+
+.quote-input-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.quote-input-box input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0 14px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+.quote-input-box input:focus { outline: 2px solid rgba(255,107,107,0.35); border-color: transparent; }
+.quote-search {
+    width: 100%;
+    height: 34px;
+    border: none;
+    background: #f4f6f7;
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+.quote-list { display: flex; flex-direction: column; gap: 10px; }
+.quote-card {
+    background: #fff;
+    border: 1px solid #eef1f3;
+    border-radius: 14px;
+    padding: 12px 12px 10px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+}
+.quote-card.is-pinned {
+    background: #fffaf3;
+    border-color: #f3e2c8;
+}
+.quote-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    margin: 0 0 8px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.quote-card textarea {
+    width: 100%;
+    min-height: 64px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: vertical;
+    margin-bottom: 8px;
+}
+.quote-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+}
+.quote-meta .date { margin-right: auto; }
+.quote-meta button {
+    border: none;
+    background: none;
+    color: #8a9599;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 6px 8px;
+    min-height: 32px;
+    border-radius: 8px;
+}
+.quote-meta button:active { background: #f1f2f6; }
+.quote-card.is-pinned .pin-btn { color: #c97a2c; }
+.quote-empty { text-align: center; color: var(--text-sub); font-size: 0.9rem; padding: 16px 8px 8px; line-height: 1.6; }
+
+/* --- Boot program card --- */
+.boot-card {
+    width: 100%;
+    max-width: 340px;
+    background: #fffdf8;
+    border-radius: 20px;
+    padding: 22px 22px 16px;
+    box-shadow: 0 18px 44px rgba(80, 50, 20, 0.16);
+    animation: fadeIn 0.35s ease-out;
+}
+.boot-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    color: #c97a2c;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.boot-card h2 {
+    font-size: 1.15rem;
+    margin: 0 0 14px;
+    font-weight: 700;
+}
+.boot-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+}
+.boot-list li {
+    position: relative;
+    padding: 8px 0 8px 16px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--text-main);
+    border-bottom: 1px solid #f3eadc;
+}
+.boot-list li:last-child { border-bottom: 0; }
+.boot-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ff9f43;
+}
+#bootDismiss { width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+    .hourglass-container.is-running .sand-flow,
+    .hourglass-container.is-running .hg-stream,
+    .hourglass-container.is-running .hg-grain-1,
+    .hourglass-container.is-running .hg-grain-2,
+    .hourglass-container.is-running .hg-grain-3 {
+        animation: none !important;
+        opacity: 0 !important;
+    }
+    .hourglass-container.is-flipping .hourglass-svg {
+        animation: none !important;
+    }
+    body.immersive #hourglass,
+    body.immersive #hourglass .hourglass-svg,
+    body.immersive .app-container {
+        transition: none !important;
+    }
+}
+
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <button type="button" class="settings-btn" id="settingsBtn" aria-label="设置与备份">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+    </button>
+
+    <div id="page-timer" class="page active">
+        <div class="timer-wrapper">
+            <div class="status-text">准备开始新挑战</div>
+            <div class="focus-badge">
+                <span id="currentTaskText">当前任务：自由专注</span>
+                <button type="button" class="clear-task-btn" id="clearTaskBtn" hidden aria-label="取消当前任务">×</button>
+            </div>
+            <div class="timer-display" id="timerDisplay">45:00</div>
+            <div class="edit-area">
+                <span>时长(分):</span>
+                <input type="number" id="durationInput" value="45" min="1" max="120" inputmode="numeric" enterkeyhint="done" aria-label="专注时长（分钟）">
+            </div>
+                        <div class="hourglass-container" id="hourglass" aria-hidden="true">
+                <svg class="hourglass-svg" viewBox="0 0 100 152" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <defs>
+                        <linearGradient id="hg-cap" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#f6e6c8"/>
+                          <stop offset="16%" stop-color="#e6c898"/>
+                          <stop offset="48%" stop-color="#c49a68"/>
+                          <stop offset="80%" stop-color="#a57a4c"/>
+                          <stop offset="100%" stop-color="#c9a073"/>
+                        </linearGradient>
+                        <linearGradient id="hg-cap-side" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stop-color="#000" stop-opacity=".16"/>
+                          <stop offset="16%" stop-color="#000" stop-opacity="0"/>
+                          <stop offset="84%" stop-color="#000" stop-opacity="0"/>
+                          <stop offset="100%" stop-color="#000" stop-opacity=".16"/>
+                        </linearGradient>
+                        <linearGradient id="hg-sand" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#ffe2b0"/>
+                          <stop offset="28%" stop-color="#ffc56e"/>
+                          <stop offset="62%" stop-color="#ff9f43"/>
+                          <stop offset="100%" stop-color="#ef7d48"/>
+                        </linearGradient>
+                        <linearGradient id="hg-sand-top" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#fff0cc"/>
+                          <stop offset="35%" stop-color="#ffd089"/>
+                          <stop offset="100%" stop-color="#ffb35a"/>
+                        </linearGradient>
+                        <linearGradient id="hg-glass-fill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#ffffff" stop-opacity=".62"/>
+                          <stop offset="42%" stop-color="#eaf3f7" stop-opacity=".26"/>
+                          <stop offset="100%" stop-color="#d5e4eb" stop-opacity=".20"/>
+                        </linearGradient>
+                        <linearGradient id="hg-flow" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#ffd7a0" stop-opacity="0"/>
+                          <stop offset="40%" stop-color="#ffb056"/>
+                          <stop offset="100%" stop-color="#ff8a44" stop-opacity=".2"/>
+                        </linearGradient>
+                        <clipPath id="hg-topInner" clipPathUnits="userSpaceOnUse">
+                          <path d="M 25.22 22.14 L 24.47 22.21 L 23.82 22.31 L 23.21 22.44 L 22.62 22.59 L 22.08 22.77 L 21.56 22.97 L 21.07 23.20 L 20.62 23.44 L 20.18 23.71 L 19.77 24.00 L 19.38 24.31 L 19.02 24.64 L 18.67 24.99 L 18.34 25.36 L 18.03 25.75 L 17.73 26.17 L 17.46 26.60 L 17.19 27.06 L 16.95 27.53 L 16.72 28.03 L 16.51 28.55 L 16.31 29.08 L 16.13 29.63 L 15.96 30.20 L 15.81 30.78 L 15.67 31.38 L 15.55 31.98 L 15.45 32.61 L 15.35 33.24 L 15.28 33.88 L 15.21 34.53 L 15.16 35.19 L 15.12 35.85 L 15.09 36.52 L 15.08 37.19 L 15.07 37.86 L 15.07 38.54 L 15.09 39.21 L 15.11 39.88 L 15.14 40.56 L 15.18 41.23 L 15.23 41.89 L 15.29 42.55 L 15.35 43.20 L 15.41 43.85 L 15.48 44.48 L 15.55 45.11 L 15.63 45.70 L 15.75 46.47 L 15.91 47.20 L 16.12 47.94 L 16.38 48.67 L 16.68 49.40 L 17.04 50.14 L 17.43 50.88 L 17.87 51.61 L 18.35 52.35 L 18.87 53.08 L 19.42 53.81 L 20.02 54.53 L 20.65 55.25 L 21.30 55.97 L 21.99 56.68 L 22.71 57.38 L 23.45 58.08 L 24.22 58.77 L 25.00 59.45 L 25.81 60.12 L 26.63 60.78 L 27.47 61.44 L 28.31 62.08 L 29.17 62.71 L 30.03 63.34 L 30.90 63.95 L 31.77 64.55 L 32.64 65.14 L 33.52 65.72 L 34.38 66.29 L 35.24 66.84 L 36.09 67.38 L 36.94 67.91 L 37.76 68.43 L 38.58 68.93 L 39.38 69.42 L 40.15 69.90 L 40.91 70.37 L 41.65 70.82 L 42.35 71.26 L 43.04 71.68 L 43.69 72.09 L 44.31 72.49 L 44.90 72.87 L 45.46 73.25 L 45.99 73.61 L 46.48 73.96 L 47.75 76.00 L 52.25 76.00 L 53.52 73.96 L 54.01 73.61 L 54.54 73.25 L 55.10 72.87 L 55.69 72.49 L 56.31 72.09 L 56.96 71.68 L 57.65 71.26 L 58.35 70.82 L 59.09 70.37 L 59.85 69.90 L 60.62 69.42 L 61.42 68.93 L 62.24 68.43 L 63.06 67.91 L 63.91 67.38 L 64.76 66.84 L 65.62 66.29 L 66.48 65.72 L 67.36 65.14 L 68.23 64.55 L 69.10 63.95 L 69.97 63.34 L 70.83 62.71 L 71.69 62.08 L 72.53 61.44 L 73.37 60.78 L 74.19 60.12 L 75.00 59.45 L 75.78 58.77 L 76.55 58.08 L 77.29 57.38 L 78.01 56.68 L 78.70 55.97 L 79.35 55.25 L 79.98 54.53 L 80.58 53.81 L 81.13 53.08 L 81.65 52.35 L 82.13 51.61 L 82.57 50.88 L 82.96 50.14 L 83.32 49.40 L 83.62 48.67 L 83.88 47.94 L 84.09 47.20 L 84.25 46.47 L 84.37 45.70 L 84.45 45.11 L 84.52 44.48 L 84.59 43.85 L 84.65 43.20 L 84.71 42.55 L 84.77 41.89 L 84.82 41.23 L 84.86 40.56 L 84.89 39.88 L 84.91 39.21 L 84.93 38.54 L 84.93 37.86 L 84.92 37.19 L 84.91 36.52 L 84.88 35.85 L 84.84 35.19 L 84.79 34.53 L 84.72 33.88 L 84.65 33.24 L 84.55 32.61 L 84.45 31.98 L 84.33 31.38 L 84.19 30.78 L 84.04 30.20 L 83.87 29.63 L 83.69 29.08 L 83.49 28.55 L 83.28 28.03 L 83.05 27.53 L 82.81 27.06 L 82.54 26.60 L 82.27 26.17 L 81.97 25.75 L 81.66 25.36 L 81.33 24.99 L 80.98 24.64 L 80.62 24.31 L 80.23 24.00 L 79.82 23.71 L 79.38 23.44 L 78.93 23.20 L 78.44 22.97 L 77.92 22.77 L 77.38 22.59 L 76.79 22.44 L 76.18 22.31 L 75.53 22.21 L 74.78 22.14 Z
+                    "/>
+                        </clipPath>
+                        <clipPath id="hg-botInner" clipPathUnits="userSpaceOnUse">
+                          <path d="M 47.75 76.00 L 46.48 78.04 L 45.99 78.39 L 45.46 78.75 L 44.90 79.13 L 44.31 79.51 L 43.69 79.91 L 43.04 80.32 L 42.35 80.74 L 41.65 81.18 L 40.91 81.63 L 40.15 82.10 L 39.38 82.58 L 38.58 83.07 L 37.76 83.57 L 36.94 84.09 L 36.09 84.62 L 35.24 85.16 L 34.38 85.71 L 33.52 86.28 L 32.64 86.86 L 31.77 87.45 L 30.90 88.05 L 30.03 88.66 L 29.17 89.29 L 28.31 89.92 L 27.47 90.56 L 26.63 91.22 L 25.81 91.88 L 25.00 92.55 L 24.22 93.23 L 23.45 93.92 L 22.71 94.62 L 21.99 95.32 L 21.30 96.03 L 20.65 96.75 L 20.02 97.47 L 19.42 98.19 L 18.87 98.92 L 18.35 99.65 L 17.87 100.39 L 17.43 101.12 L 17.04 101.86 L 16.68 102.60 L 16.38 103.33 L 16.12 104.06 L 15.91 104.80 L 15.75 105.53 L 15.63 106.30 L 15.55 106.89 L 15.48 107.52 L 15.41 108.15 L 15.35 108.80 L 15.29 109.45 L 15.23 110.11 L 15.18 110.77 L 15.14 111.44 L 15.11 112.12 L 15.09 112.79 L 15.07 113.46 L 15.07 114.14 L 15.08 114.81 L 15.09 115.48 L 15.12 116.15 L 15.16 116.81 L 15.21 117.47 L 15.28 118.12 L 15.35 118.76 L 15.45 119.39 L 15.55 120.02 L 15.67 120.62 L 15.81 121.22 L 15.96 121.80 L 16.13 122.37 L 16.31 122.92 L 16.51 123.45 L 16.72 123.97 L 16.95 124.47 L 17.19 124.94 L 17.46 125.40 L 17.73 125.83 L 18.03 126.25 L 18.34 126.64 L 18.67 127.01 L 19.02 127.36 L 19.38 127.69 L 19.77 128.00 L 20.18 128.29 L 20.62 128.56 L 21.07 128.80 L 21.56 129.03 L 22.08 129.23 L 22.62 129.41 L 23.21 129.56 L 23.82 129.69 L 24.47 129.79 L 25.22 129.86 L 74.78 129.86 L 75.53 129.79 L 76.18 129.69 L 76.79 129.56 L 77.38 129.41 L 77.92 129.23 L 78.44 129.03 L 78.93 128.80 L 79.38 128.56 L 79.82 128.29 L 80.23 128.00 L 80.62 127.69 L 80.98 127.36 L 81.33 127.01 L 81.66 126.64 L 81.97 126.25 L 82.27 125.83 L 82.54 125.40 L 82.81 124.94 L 83.05 124.47 L 83.28 123.97 L 83.49 123.45 L 83.69 122.92 L 83.87 122.37 L 84.04 121.80 L 84.19 121.22 L 84.33 120.62 L 84.45 120.02 L 84.55 119.39 L 84.65 118.76 L 84.72 118.12 L 84.79 117.47 L 84.84 116.81 L 84.88 116.15 L 84.91 115.48 L 84.92 114.81 L 84.93 114.14 L 84.93 113.46 L 84.91 112.79 L 84.89 112.12 L 84.86 111.44 L 84.82 110.77 L 84.77 110.11 L 84.71 109.45 L 84.65 108.80 L 84.59 108.15 L 84.52 107.52 L 84.45 106.89 L 84.37 106.30 L 84.25 105.53 L 84.09 104.80 L 83.88 104.06 L 83.62 103.33 L 83.32 102.60 L 82.96 101.86 L 82.57 101.12 L 82.13 100.39 L 81.65 99.65 L 81.13 98.92 L 80.58 98.19 L 79.98 97.47 L 79.35 96.75 L 78.70 96.03 L 78.01 95.32 L 77.29 94.62 L 76.55 93.92 L 75.78 93.23 L 75.00 92.55 L 74.19 91.88 L 73.37 91.22 L 72.53 90.56 L 71.69 89.92 L 70.83 89.29 L 69.97 88.66 L 69.10 88.05 L 68.23 87.45 L 67.36 86.86 L 66.48 86.28 L 65.62 85.71 L 64.76 85.16 L 63.91 84.62 L 63.06 84.09 L 62.24 83.57 L 61.42 83.07 L 60.62 82.58 L 59.85 82.10 L 59.09 81.63 L 58.35 81.18 L 57.65 80.74 L 56.96 80.32 L 56.31 79.91 L 55.69 79.51 L 55.10 79.13 L 54.54 78.75 L 54.01 78.39 L 53.52 78.04 L 52.25 76.00 Z"/>
+                        </clipPath>
+                        <clipPath id="hg-topLevel" clipPathUnits="userSpaceOnUse">
+                          <path id="hg-topLevelPath" d="M 0 22.2 L 100 22.2 L 100 79.0 L 0 79.0 Z"/>
+                        </clipPath>
+                        <clipPath id="hg-botLevel" clipPathUnits="userSpaceOnUse">
+                          <path id="hg-botLevelPath" d="M 0 0 Z"/>
+                        </clipPath>
+                        <clipPath id="hg-neck" clipPathUnits="userSpaceOnUse">
+                          <rect x="47.85" y="72.2" width="4.3" height="7.6" rx="1.3"/>
+                        </clipPath>
+                      </defs>
+                    
+                      <ellipse cx="50" cy="149.2" rx="26" ry="2.2" fill="#2d3436" opacity=".1"/>
+                    
+                      <path fill="url(#hg-glass-fill)" d="M 25.00 20.00 C 12.00 21.00, 12.20 36.00, 13.50 46.00 C 15.20 60.00, 39.50 71.20, 45.60 76.00 C 39.50 80.80, 15.20 92.00, 13.50 106.00 C 12.20 116.00, 12.00 131.00, 25.00 132.00 L 75.00 132.00 C 88.00 131.00, 87.80 116.00, 86.50 106.00 C 84.80 92.00, 60.50 80.80, 54.40 76.00 C 60.50 71.20, 84.80 60.00, 86.50 46.00 C 87.80 36.00, 88.00 21.00, 75.00 20.00 Z
+                    "/>
+                    
+                      <g clip-path="url(#hg-topInner)">
+                        <g clip-path="url(#hg-topLevel)">
+                          <rect x="8" y="18" width="84" height="62" fill="url(#hg-sand-top)"/>
+                        </g>
+                      </g>
+                      <g clip-path="url(#hg-botInner)">
+                        <g clip-path="url(#hg-botLevel)">
+                          <rect x="8" y="72" width="84" height="62" fill="url(#hg-sand)"/>
+                        </g>
+                      </g>
+                    
+                      <g class="sand-flow" clip-path="url(#hg-neck)">
+                        <rect class="hg-stream" x="49.1" y="72.2" width="1.8" height="7.6" rx="0.9" fill="url(#hg-flow)"/>
+                        <circle class="hg-grain-1" cx="50" cy="73.4" r="0.72" fill="#ffc56e"/>
+                        <circle class="hg-grain-2" cx="50" cy="75.6" r="0.62" fill="#ff9f43"/>
+                        <circle class="hg-grain-3" cx="50" cy="77.8" r="0.68" fill="#ff8a4a"/>
+                      </g>
+                    
+                      <path class="hg-glass-stroke" fill="none" stroke="#7f96a0" stroke-width="1.55" stroke-linejoin="round" stroke-linecap="round" d="M 25.00 20.00 C 12.00 21.00, 12.20 36.00, 13.50 46.00 C 15.20 60.00, 39.50 71.20, 45.60 76.00 C 39.50 80.80, 15.20 92.00, 13.50 106.00 C 12.20 116.00, 12.00 131.00, 25.00 132.00 L 75.00 132.00 C 88.00 131.00, 87.80 116.00, 86.50 106.00 C 84.80 92.00, 60.50 80.80, 54.40 76.00 C 60.50 71.20, 84.80 60.00, 86.50 46.00 C 87.80 36.00, 88.00 21.00, 75.00 20.00 Z
+                    "/>
+                      <path class="hg-hi-top" fill="none" stroke="#fff" stroke-width="1.55" stroke-linecap="round" opacity=".7" d="M30 28 C22.5 38, 22.5 50, 31.5 61"/>
+                      <path class="hg-hi-bot" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".48" d="M30 91 C22.5 101, 22.8 114, 31 124"/>
+                      <path class="hg-hi-right" fill="none" stroke="#5f7a86" stroke-width=".65" stroke-linecap="round" opacity=".14" d="M72 30 C80 41, 80 54, 70 63"/>
+                    
+                      <rect x="15" y="131.2" width="70" height="15" rx="3.6" fill="url(#hg-cap)"/>
+                      <rect x="15" y="131.2" width="70" height="15" rx="3.6" fill="url(#hg-cap-side)"/>
+                      <rect x="18.2" y="132.6" width="63.6" height="3.5" rx="1.4" fill="#fbf1dc" opacity=".55"/>
+                      <rect x="22" y="138.6" width="56" height="1" rx=".5" fill="#7a4e2c" opacity=".18"/>
+                      <rect x="18.5" y="143.8" width="63" height="1.15" rx=".5" fill="#5c3518" opacity=".22"/>
+                    
+                      <rect x="15" y="5.6" width="70" height="15" rx="3.6" fill="url(#hg-cap)"/>
+                      <rect x="15" y="5.6" width="70" height="15" rx="3.6" fill="url(#hg-cap-side)"/>
+                      <rect x="18.2" y="6.8" width="63.6" height="3.7" rx="1.4" fill="#fff6e6" opacity=".72"/>
+                      <rect x="22" y="13.2" width="56" height="1" rx=".5" fill="#7a4e2c" opacity=".18"/>
+                </svg>
+            </div>
+                        <p class="rest-msg" id="restMsg">起来走走，喝口水</p>
+<div class="btn-container">
+                <button type="button" class="btn btn-primary" id="mainBtn">开始</button>
+                <button type="button" class="btn btn-light" id="resetBtn">重置</button>
+            </div>
+        </div>
+        <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val" id="todayTime">0m</span><span class="stat-label">今日专注</span></div>
+            <div class="stat-item"><span class="stat-val" id="focusCount">0</span><span class="stat-label">专注次数</span></div>
+        </div>
+    </div>
+
+    <div id="page-tasks" class="page">
+        <h2>今日任务清单</h2>
+        <div class="input-box">
+            <input type="text" id="newTaskInput" placeholder="添加今天要完成的事..." maxlength="80" enterkeyhint="done" autocomplete="off">
+            <button type="button" class="btn btn-primary btn-add" id="addTaskBtn" aria-label="添加任务">+</button>
+        </div>
+        <ul class="task-list" id="todayTaskList"></ul>
+        <div id="noTasksMsg" class="empty-state" style="display:none;">今天没有待办任务，享受生活吧！</div>
+    </div>
+
+    <div id="page-history" class="page">
+        <div class="calendar-header">
+            <div class="month-nav">
+                <button type="button" class="month-btn" id="prevMonthBtn" aria-label="上个月">‹</button>
+                <span class="month-label" id="calendarLabel"></span>
+                <button type="button" class="month-btn" id="nextMonthBtn" aria-label="下个月">›</button>
+            </div>
+            <div class="cal-legend">● 有记录</div>
+        </div>
+        <div class="calendar-grid" style="margin-bottom:4px;">
+            <div class="day-name">日</div><div class="day-name">一</div><div class="day-name">二</div>
+            <div class="day-name">三</div><div class="day-name">四</div><div class="day-name">五</div><div class="day-name">六</div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <div id="dayDetailArea" class="day-detail" style="display:none;">
+            <div class="detail-header">
+                <span id="detailDate"></span>
+                <span style="color:var(--primary)" id="detailTotal"></span>
+            </div>
+            <div id="detailReview" class="detail-review" style="display:none;"></div>
+            <ul class="task-list" id="historyTaskList"></ul>
+        </div>
+    </div>
+
+    <div id="page-me" class="page">
+        <section class="me-section" aria-labelledby="hpTitle">
+            <div class="me-kicker">每日评测</div>
+            <h2 class="me-title" id="hpTitle">今天的血条</h2>
+            <div class="me-date-nav">
+                <button type="button" class="month-btn" id="hpPrevDay" aria-label="前一天">‹</button>
+                <div class="me-date-wrap">
+                    <span id="hpDateLabel">今天</span>
+                    <input type="date" id="hpDate" aria-label="评价日期">
+                </div>
+                <button type="button" class="month-btn" id="hpNextDay" aria-label="后一天">›</button>
+                <button type="button" class="me-today-link" id="hpTodayBtn">回到今天</button>
+            </div>
+            <p class="me-ref" id="hpFocusRef">这一天还没有专注记录</p>
+            <div class="hp-score-wrap">
+                <div class="hp-score" id="hpScore">—</div>
+                <div class="hp-unit" id="hpUnit">分</div>
+            </div>
+            <div class="hp-track" id="hpTrack" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="当天血条分数" tabindex="0">
+                <div class="hp-fill" id="hpFill"></div>
+                <div class="hp-shine"></div>
+            </div>
+            <div class="dim-row" id="dimRow">
+                <button type="button" class="dim-chip" data-dim="done" aria-pressed="false"><span class="star">★</span>任务达成</button>
+                <button type="button" class="dim-chip" data-dim="joy" aria-pressed="false"><span class="star">★</span>愉快充实</button>
+                <button type="button" class="dim-chip" data-dim="innov" aria-pressed="false"><span class="star">★</span>创新</button>
+                <button type="button" class="dim-chip" data-dim="health" aria-pressed="false"><span class="star">★</span>健康</button>
+                <button type="button" class="dim-chip" data-dim="pace" aria-pressed="false"><span class="star">★</span>劳逸结合</button>
+            </div>
+            <textarea class="hp-note" id="hpNote" maxlength="80" placeholder="一句话记下这一天……" rows="1"></textarea>
+            <div class="week-head">
+                <span>最近 7 天</span>
+                <span>本周平均 <span class="week-avg-num" id="weekAvg">—</span></span>
+            </div>
+            <div class="week-chart" id="weekChart"></div>
+            <p class="me-save-status" id="meSaveStatus"></p>
+            <p class="me-sync-status" id="meSyncStatus" hidden></p>
+        </section>
+
+        <section class="me-section" aria-labelledby="quoteTitle">
+            <div class="me-kicker">开机程序</div>
+            <h2 class="me-title" id="quoteTitle">技能语录</h2>
+            <div class="quote-input-box">
+                <input type="text" id="quoteInput" placeholder="写一句给自己的提醒，按回车记下…" maxlength="200" enterkeyhint="done" autocomplete="off">
+            </div>
+            <input type="search" id="quoteSearch" class="quote-search" placeholder="搜索语录" maxlength="40" autocomplete="off">
+            <div class="quote-list" id="quoteList"></div>
+        </section>
+    </div>
+    <nav class="nav-bar" aria-label="主导航">
+        <button type="button" class="nav-btn active" data-page="timer" aria-label="计时"><span style="font-size:1.3rem;line-height:1;">⏱</span><span>计时</span></button>
+        <button type="button" class="nav-btn" data-page="tasks" aria-label="今日任务"><span style="font-size:1.3rem;line-height:1;">📝</span><span>今日</span></button>
+        <button type="button" class="nav-btn" data-page="history" aria-label="历史记录"><span style="font-size:1.3rem;line-height:1;">📅</span><span>历史</span></button>
+        <button type="button" class="nav-btn" data-page="me" aria-label="我"><span style="font-size:1.3rem;line-height:1;">🌿</span><span>我</span></button>
+    </nav>
+
+    <div id="immersiveHit" class="immersive-hit" aria-hidden="true"></div>
+    <div id="immersiveControls" class="immersive-controls" aria-hidden="true">
+        <div class="im-top">
+            <div class="im-task" id="imTaskName">自由专注</div>
+            <div class="im-time" id="imTime">45:00</div>
+        </div>
+        <div class="im-actions">
+            <button type="button" class="btn im-btn im-pause" id="imPause">暂停</button>
+            <button type="button" class="btn im-btn im-end" id="imEnd">结束专注</button>
+        </div>
+    </div>
+
+    <div id="bootMask" class="mask center" role="presentation">
+        <div class="boot-card" role="dialog" aria-labelledby="bootTitle">
+            <div class="boot-kicker">今日开机程序</div>
+            <h2 id="bootTitle">先把自己轻轻打开</h2>
+            <ul class="boot-list" id="bootList"></ul>
+            <button type="button" class="btn btn-primary" id="bootDismiss">好，开始今天</button>
+        </div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <div id="sheetMask" class="mask" role="presentation">
+        <div class="sheet" role="dialog" aria-labelledby="sheetTitle">
+            <div class="sheet-handle"></div>
+            <h2 id="sheetTitle">设置与备份</h2>
+            <p class="sheet-desc">数据先存在这台设备的浏览器里。换手机或清理缓存前，请先导出备份；也可以用下面的同步，让手机和电脑共用一本私有笔记。</p>
+            <div class="sheet-row">
+                <label for="restInput">休息时长（分钟）</label>
+                <input type="number" id="restInput" value="5" min="1" max="30" inputmode="numeric" aria-label="休息时长（分钟）">
+            </div>
+            <label class="sheet-check"><input type="checkbox" id="autoRestChk" checked> 专注完成后自动开始休息</label>
+            <button type="button" class="btn btn-primary btn-block" id="exportBtn">导出 JSON 备份</button>
+            <button type="button" class="btn btn-light btn-block" id="copyBtn">复制备份到剪贴板</button>
+            <button type="button" class="btn btn-light btn-block" id="importBtn">导入备份</button>
+            <input type="file" id="importFile" accept="application/json,.json" hidden>
+            <div class="sync-section" id="syncSection">
+                <h3>同步</h3>
+                <p class="sync-help">在 GitHub 创建一个只勾选 <strong>gist</strong> 权限的令牌，粘贴到下面。第一台设备会自动建立私有同步本并给出编号，第二台把同一份密钥和编号填上即可。密钥只留在这台设备，不会进入备份文件。<a href="https://github.com/settings/tokens" target="_blank" rel="noopener">打开 GitHub 令牌页面</a></p>
+                <input type="password" id="syncToken" class="sync-input" autocomplete="off" spellcheck="false" placeholder="粘贴 GitHub 密钥（只填一次）" aria-label="GitHub 同步密钥">
+                <div class="sync-id-row">
+                    <input type="text" id="syncGistId" class="sync-input" autocomplete="off" spellcheck="false" placeholder="同步本编号（第一台可留空）" aria-label="Gist 编号">
+                    <button type="button" class="btn btn-light" id="syncCopyId">复制编号</button>
+                </div>
+                <div class="sync-actions">
+                    <button type="button" class="btn btn-primary btn-block" id="syncConnectBtn">连接并同步</button>
+                    <button type="button" class="btn btn-light btn-block" id="syncDisconnectBtn">断开并忘记密钥</button>
+                </div>
+                <p class="sync-status" id="syncStatus" role="status"></p>
+            </div>
+            <p class="sheet-foot">番茄专注 · 本地键 pomodoro_v4</p>
+            <button type="button" class="btn btn-light btn-block" id="sheetClose">关闭</button>
+        </div>
+    </div>
+
+    <div id="confirmMask" class="mask center" role="presentation">
+        <div class="modal-card" role="dialog" aria-labelledby="confirmMsg">
+            <p id="confirmMsg"></p>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-light" id="confirmCancel">取消</button>
+                <button type="button" class="btn btn-primary" id="confirmOk">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+(function () {
+    'use strict';
+
+    const STORAGE_KEY = 'pomodoro_v4';
+    const APP_TITLE = '番茄专注';
+    const MIN_MINUTES = 1;
+    const MAX_MINUTES = 120;
+    const DIM_KEYS = [
+        { key: 'done', label: '任务达成' },
+        { key: 'joy', label: '愉快充实' },
+        { key: 'innov', label: '创新' },
+        { key: 'health', label: '健康' },
+        { key: 'pace', label: '劳逸结合' }
+    ];
+    const REST_MSGS = ['起来走走，喝口水', '看看远处，让眼睛歇一会儿', '伸个懒腰，深呼吸一次'];
+    const THEME_REST = '#cfe8ee';
+
+    let appData = defaultAppData();
+    let timerId = null;
+    let isRunning = false;
+    let timeLeft = 45 * 60;
+    let totalSeconds = 45 * 60;
+    let endTimeStamp = 0;
+    let accumulatedMs = 0;
+    let runStartedAt = 0;
+    let sessionCreditMinutes = 45;
+    let sessionDate = '';
+    let finishing = false;
+    let isResting = false;
+    let savedFocusTotal = 45 * 60;
+    let restMessage = REST_MSGS[0];
+    let reviewDate = localDateStr();
+    let hpDragging = false;
+    let wakeLock = null;
+    let todayStr = localDateStr();
+    let viewYear = new Date().getFullYear();
+    let viewMonth = new Date().getMonth();
+    let lastPersist = 0;
+    let confirmResolver = null;
+    let toastTimer = 0;
+
+    function defaultAppData() {
+        return {
+            tasks: [],
+            dailyStats: {},
+            settings: { defaultTime: 45, restTime: 5, autoRest: true },
+            currentTaskId: null,
+            timer: null,
+            dailyReviews: {},
+            quotes: [],
+            bootShownDate: '',
+            deletedQuoteIds: [],
+            deletedTaskIds: [],
+            meta: { savedAt: 0, rev: 0 }
+        };
+    }
+
+    function localDateStr(d) {
+        d = d || new Date();
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return y + '-' + m + '-' + day;
+    }
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function formatMonthDay(dateStr) {
+        if (!dateStr || dateStr.length < 10) return dateStr || '';
+        return Number(dateStr.slice(5, 7)) + '/' + Number(dateStr.slice(8, 10));
+    }
+
+    function clampMinutes(val) {
+        if (!Number.isFinite(val) || val < MIN_MINUTES) return null;
+        return Math.min(MAX_MINUTES, Math.round(val));
+    }
+
+    function defaultAppDataMerged(raw) {
+        const base = defaultAppData();
+        if (!raw || typeof raw !== 'object') return base;
+        if (Array.isArray(raw.tasks)) {
+            base.tasks = raw.tasks.map(normalizeTask).filter(Boolean);
+        }
+        if (raw.dailyStats && typeof raw.dailyStats === 'object' && !Array.isArray(raw.dailyStats)) {
+            base.dailyStats = {};
+            Object.keys(raw.dailyStats).forEach(function (k) {
+                const s = raw.dailyStats[k];
+                if (s && typeof s === 'object') {
+                    base.dailyStats[k] = {
+                        count: Number(s.count) || 0,
+                        totalTime: Number(s.totalTime) || 0
+                    };
+                }
+            });
+        }
+        const dt = clampMinutes(Number(raw.settings && raw.settings.defaultTime));
+        base.settings.defaultTime = dt || 45;
+        const rt = Number(raw.settings && raw.settings.restTime);
+        base.settings.restTime = (rt >= 1 && rt <= 30) ? Math.round(rt) : 5;
+        if (raw.settings && raw.settings.autoRest === false) base.settings.autoRest = false;
+        else base.settings.autoRest = true;
+        if (raw.currentTaskId !== undefined) base.currentTaskId = raw.currentTaskId;
+        if (raw.timer && typeof raw.timer === 'object') base.timer = raw.timer;
+        if (raw.dailyReviews && typeof raw.dailyReviews === 'object' && !Array.isArray(raw.dailyReviews)) {
+            base.dailyReviews = {};
+            Object.keys(raw.dailyReviews).forEach(function (k) {
+                const r = normalizeReview(k, raw.dailyReviews[k]);
+                if (r) base.dailyReviews[k] = r;
+            });
+        }
+        if (Array.isArray(raw.quotes)) {
+            base.quotes = raw.quotes.map(normalizeQuote).filter(Boolean);
+        }
+        if (typeof raw.bootShownDate === 'string') base.bootShownDate = raw.bootShownDate;
+        if (Array.isArray(raw.deletedQuoteIds)) base.deletedQuoteIds = raw.deletedQuoteIds.map(Number).filter(Boolean);
+        if (Array.isArray(raw.deletedTaskIds)) base.deletedTaskIds = raw.deletedTaskIds.map(Number).filter(Boolean);
+        if (raw.meta && typeof raw.meta === 'object') {
+            base.meta = {
+                savedAt: Number(raw.meta.savedAt) || 0,
+                rev: Number(raw.meta.rev) || 0
+            };
+        }
+        if (raw.settings && raw.settings.lastExportedAt) {
+            base.settings.lastExportedAt = Number(raw.settings.lastExportedAt) || 0;
+        }
+        return base;
+    }
+
+    function normalizeReview(dateKey, r) {
+        if (!r || typeof r !== 'object') return null;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) return null;
+        const dims = {};
+        DIM_KEYS.forEach(function (d) {
+            dims[d.key] = !!(r.dims && r.dims[d.key]);
+        });
+        let score = Number(r.score);
+        if (!isFinite(score)) score = 0;
+        score = Math.max(0, Math.min(100, Math.round(score)));
+        const updatedAt = Number(r.updatedAt) || 0;
+        return {
+            score: score,
+            dims: dims,
+            note: typeof r.note === 'string' ? r.note.slice(0, 80) : '',
+            updatedAt: updatedAt,
+            scoreAt: Number(r.scoreAt) || updatedAt,
+            noteAt: Number(r.noteAt) || updatedAt,
+            dimsAt: Number(r.dimsAt) || updatedAt
+        };
+    }
+
+    function normalizeQuote(q) {
+        if (!q || typeof q !== 'object') return null;
+        const text = typeof q.text === 'string' ? q.text.trim().slice(0, 200) : '';
+        if (!text) return null;
+        return {
+            id: Number(q.id) || Date.now(),
+            text: text,
+            createdAt: Number(q.createdAt) || Date.now(),
+            date: typeof q.date === 'string' ? q.date : localDateStr(),
+            pinned: !!q.pinned,
+            pinnedAt: Number(q.pinnedAt) || 0,
+            updatedAt: Number(q.updatedAt) || Number(q.createdAt) || 0
+        };
+    }
+
+    function clampRest(n) {
+        n = Number(n);
+        if (!isFinite(n)) return 5;
+        return Math.max(1, Math.min(30, Math.round(n)));
+    }
+
+    function hpColor(score) {
+        if (score >= 70) return '#2fba6f';
+        if (score >= 40) return '#e6a317';
+        return '#ff6b6b';
+    }
+
+
+    function normalizeTask(t) {
+        if (!t || typeof t !== 'object') return null;
+        const title = String(t.title || '').trim();
+        return {
+            id: t.id != null ? t.id : Date.now(),
+            title: title || '未命名',
+            status: t.status === 'done' ? 'done' : 'todo',
+            createDate: t.createDate || todayStr,
+            doneDate: t.doneDate || null,
+            timeSpent: Number(t.timeSpent) || 0
+        };
+    }
+
+    function snapshotTimer() {
+        if (isRunning && endTimeStamp) {
+            timeLeft = Math.max(0, Math.ceil((endTimeStamp - Date.now()) / 1000));
+        }
+        return {
+            isRunning: isRunning,
+            endTimeStamp: isRunning ? endTimeStamp : 0,
+            timeLeft: timeLeft,
+            totalSeconds: totalSeconds,
+            accumulatedMs: accumulatedMs,
+            runStartedAt: isRunning ? runStartedAt : 0,
+            sessionCreditMinutes: sessionCreditMinutes,
+            sessionDate: sessionDate || todayStr,
+            mode: isResting ? 'rest' : (isRunning ? 'focus' : 'idle'),
+            isResting: isResting,
+            savedFocusTotal: savedFocusTotal,
+            restMessage: restMessage || REST_MSGS[0]
+        };
+    }
+
+
+    const BAK_KEY = STORAGE_KEY + '.bak';
+    let lastLoadedRev = 0;
+    let persistAsked = false;
+
+    function diskRev(d) {
+        return (d && d.meta && Number(d.meta.rev)) || 0;
+    }
+    function diskSavedAt(d) {
+        return (d && d.meta && Number(d.meta.savedAt)) || 0;
+    }
+    function uniqueIds(arr) {
+        const seen = {};
+        const out = [];
+        (arr || []).forEach(function (id) {
+            const n = Number(id);
+            if (!n || seen[n]) return;
+            seen[n] = 1;
+            out.push(n);
+        });
+        return out;
+    }
+    function readStored(key) {
+        try {
+            const raw = localStorage.getItem(key || STORAGE_KEY);
+            if (!raw) return null;
+            return defaultAppDataMerged(JSON.parse(raw));
+        } catch (err) {
+            return null;
+        }
+    }
+    function mergeTask(local, disk) {
+        const lu = Number(local.updatedAt) || 0;
+        const du = Number(disk.updatedAt) || 0;
+        const newer = lu >= du ? local : disk;
+        const older = lu >= du ? disk : local;
+        const out = Object.assign({}, older, newer);
+        out.timeSpent = Math.max(Number(local.timeSpent) || 0, Number(disk.timeSpent) || 0);
+        if (local.status === 'done' || disk.status === 'done') {
+            out.status = 'done';
+            out.doneDate = local.doneDate || disk.doneDate;
+        }
+        out.title = newer.title || older.title;
+        out.updatedAt = Math.max(lu, du);
+        return out;
+    }
+    function reviewFieldTime(r, field) {
+        if (!r) return 0;
+        return Number(r[field + 'At']) || Number(r.updatedAt) || 0;
+    }
+    function mergeReview(a, b) {
+        const scoreAt = Math.max(reviewFieldTime(a, 'score'), reviewFieldTime(b, 'score'));
+        const noteAt = Math.max(reviewFieldTime(a, 'note'), reviewFieldTime(b, 'note'));
+        const dimsAt = Math.max(reviewFieldTime(a, 'dims'), reviewFieldTime(b, 'dims'));
+        return {
+            score: reviewFieldTime(a, 'score') >= reviewFieldTime(b, 'score') ? a.score : b.score,
+            note: reviewFieldTime(a, 'note') >= reviewFieldTime(b, 'note') ? (a.note || '') : (b.note || ''),
+            dims: reviewFieldTime(a, 'dims') >= reviewFieldTime(b, 'dims') ? (a.dims || {}) : (b.dims || {}),
+            updatedAt: Math.max(Number(a.updatedAt) || 0, Number(b.updatedAt) || 0, scoreAt, noteAt, dimsAt),
+            scoreAt: scoreAt,
+            noteAt: noteAt,
+            dimsAt: dimsAt
+        };
+    }
+    function mergeAppData(local, disk) {
+        if (!disk) return local;
+        const out = defaultAppDataMerged(local);
+        const reviews = Object.assign({}, disk.dailyReviews || {});
+        Object.keys(out.dailyReviews || {}).forEach(function (k) {
+            const a = out.dailyReviews[k];
+            const b = reviews[k];
+            if (!b) reviews[k] = a;
+            else reviews[k] = mergeReview(a, b);
+        });
+        out.dailyReviews = reviews;
+        const stats = Object.assign({}, disk.dailyStats || {});
+        Object.keys(out.dailyStats || {}).forEach(function (k) {
+            const a = out.dailyStats[k] || { count: 0, totalTime: 0 };
+            const b = stats[k];
+            if (!b) stats[k] = a;
+            else stats[k] = {
+                count: Math.max(Number(a.count) || 0, Number(b.count) || 0),
+                totalTime: Math.max(Number(a.totalTime) || 0, Number(b.totalTime) || 0)
+            };
+        });
+        out.dailyStats = stats;
+        out.deletedQuoteIds = uniqueIds([].concat(out.deletedQuoteIds || [], disk.deletedQuoteIds || []));
+        out.deletedTaskIds = uniqueIds([].concat(out.deletedTaskIds || [], disk.deletedTaskIds || []));
+        const taskMap = {};
+        (disk.tasks || []).forEach(function (t) { if (t && t.id != null) taskMap[t.id] = t; });
+        (out.tasks || []).forEach(function (t) {
+            if (!t || t.id == null) return;
+            taskMap[t.id] = taskMap[t.id] ? mergeTask(t, taskMap[t.id]) : t;
+        });
+        out.tasks = Object.keys(taskMap).map(function (k) { return taskMap[k]; })
+            .filter(function (t) { return out.deletedTaskIds.indexOf(t.id) === -1; });
+        const quoteMap = {};
+        (disk.quotes || []).forEach(function (q) { if (q && q.id != null) quoteMap[q.id] = q; });
+        (out.quotes || []).forEach(function (q) {
+            if (!q || q.id == null) return;
+            const b = quoteMap[q.id];
+            if (!b) quoteMap[q.id] = q;
+            else {
+                const au = Number(q.updatedAt) || Math.max(Number(q.createdAt) || 0, Number(q.pinnedAt) || 0);
+                const bu = Number(b.updatedAt) || Math.max(Number(b.createdAt) || 0, Number(b.pinnedAt) || 0);
+                quoteMap[q.id] = au >= bu ? q : b;
+            }
+        });
+        out.quotes = Object.keys(quoteMap).map(function (k) { return quoteMap[k]; })
+            .filter(function (q) { return out.deletedQuoteIds.indexOf(q.id) === -1; });
+        if (diskSavedAt(disk) > diskSavedAt(local)) {
+            out.settings = disk.settings;
+            if (disk.currentTaskId !== undefined) out.currentTaskId = disk.currentTaskId;
+            if ((disk.bootShownDate || '') >= (out.bootShownDate || '')) out.bootShownDate = disk.bootShownDate;
+        }
+        out.meta = {
+            savedAt: Math.max(diskSavedAt(local), diskSavedAt(disk)),
+            rev: Math.max(diskRev(local), diskRev(disk))
+        };
+        return out;
+    }
+    function formatSaveTime(ts) {
+        if (!ts) return '';
+        const d = new Date(ts);
+        const key = localDateStr(d);
+        const hm = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+        if (key === todayStr) return '今天 ' + hm;
+        if (key === localDateStr(new Date(Date.now() - 86400000))) return '昨天 ' + hm;
+        return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + hm;
+    }
+    function updateSaveStatus() {
+        const el = document.getElementById('meSaveStatus');
+        if (!el) return;
+        const days = Object.keys(appData.dailyReviews || {}).filter(function (k) {
+            const r = appData.dailyReviews[k];
+            return r && (r.updatedAt || r.score || r.note);
+        }).length;
+        const saved = diskSavedAt(appData);
+        const parts = [];
+        if (saved) parts.push('上次保存 ' + formatSaveTime(saved));
+        if (days) parts.push('已记下 ' + days + ' 天血条');
+        const quotes = (appData.quotes || []).length;
+        if (quotes) parts.push(quotes + ' 条语录');
+        let line = parts.join(' · ');
+        const exported = Number(appData.settings && appData.settings.lastExportedAt) || 0;
+        if ((days + quotes) >= 3 && (!exported || Date.now() - exported > 14 * 86400000)) {
+            line += (line ? '。' : '') + '记录只存在这个浏览器里，建议在设置中导出一份备份。';
+        } else if (!line) {
+            line = '记录只存在这个浏览器里，换一个入口或清理数据就看不到了。';
+        }
+        el.textContent = line;
+    }
+    function requestPersistentStorage() {
+        if (persistAsked) return;
+        if (!navigator.storage || !navigator.storage.persist) return;
+        persistAsked = true;
+        const ask = function () {
+            return navigator.storage.persist();
+        };
+        if (navigator.storage.persisted) {
+            navigator.storage.persisted().then(function (ok) {
+                if (!ok) return ask();
+            }).catch(function () {});
+        } else {
+            ask().catch(function () {});
+        }
+    }
+    function applyIncomingStorage() {
+        const disk = readStored();
+        if (!disk || diskRev(disk) <= lastLoadedRev) return false;
+        const mineRunning = (isRunning || isResting) ? snapshotTimer() : null;
+        appData = mergeAppData(appData, disk);
+        lastLoadedRev = Math.max(diskRev(disk), lastLoadedRev);
+        if (!mineRunning && disk.timer && disk.timer.isRunning && !isRunning && !isResting) {
+            appData.timer = disk.timer;
+            restoreTimer();
+        }
+        renderTodayTasks();
+        updateCurrentTaskDisplay();
+        updateHomeStats();
+        if (!isRunning && !isResting) {
+            updateUI();
+            updateMainButton();
+        }
+        if (document.getElementById('page-history') && document.getElementById('page-history').classList.contains('active')) renderCalendar();
+        if (document.getElementById('page-me') && document.getElementById('page-me').classList.contains('active')) renderMePage();
+        else updateSaveStatus();
+        return true;
+    }
+    function saveData(opts) {
+        opts = opts || {};
+        try {
+            var mergedNewerDisk = false;
+            if (!opts.replace) {
+                const disk = readStored();
+                const diskHas = disk ? (Object.keys(disk.dailyReviews || {}).length + (disk.tasks || []).length + (disk.quotes || []).length + Object.keys(disk.dailyStats || {}).length) : 0;
+                const mineHas = Object.keys(appData.dailyReviews || {}).length + (appData.tasks || []).length + (appData.quotes || []).length + Object.keys(appData.dailyStats || {}).length;
+                const diskNewer = disk && (diskRev(disk) > lastLoadedRev || (lastLoadedRev === 0 && diskRev(disk) === 0 && diskHas > mineHas));
+                if (diskNewer) {
+                    const mineRunning = (isRunning || isResting) ? snapshotTimer() : null;
+                    appData = mergeAppData(appData, disk);
+                    if (mineRunning && mineRunning.isRunning) appData.timer = mineRunning;
+                    else if (!isRunning && !isResting && disk.timer && disk.timer.isRunning) {
+                        appData.timer = disk.timer;
+                    }
+                    mergedNewerDisk = true;
+                }
+            }
+            const rev = Math.max(diskRev(appData), lastLoadedRev) + 1;
+            appData.meta = { savedAt: Date.now(), rev: rev };
+            const mine = snapshotTimer();
+            if (mine.isRunning) {
+                appData.timer = mine;
+            } else if (!(mergedNewerDisk && appData.timer && appData.timer.isRunning)) {
+                appData.timer = mine;
+            }
+            const payload = JSON.stringify(appData);
+            localStorage.setItem(STORAGE_KEY, payload);
+            lastLoadedRev = rev;
+            try { localStorage.setItem(BAK_KEY, payload); } catch (err2) { /* ignore bak failure */ }
+            updateSaveStatus();
+            if (!opts.fromSync && !opts.replace) {
+                syncDirty = true;
+                scheduleSync('save');
+            }
+        } catch (err) {
+            showToast('保存失败，存储空间可能已满');
+        }
+    }
+
+    function loadData() {
+        function adopt(data, msg) {
+            appData = data;
+            lastLoadedRev = diskRev(appData);
+            if (msg) showToast(msg);
+        }
+        try {
+            let raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) {
+                raw = localStorage.getItem(BAK_KEY);
+                if (raw) {
+                    adopt(defaultAppDataMerged(JSON.parse(raw)), '已从本地备份恢复数据');
+                    return;
+                }
+                appData = defaultAppData();
+                lastLoadedRev = 0;
+                return;
+            }
+            adopt(defaultAppDataMerged(JSON.parse(raw)));
+        } catch (err) {
+            try {
+                const bak = localStorage.getItem(BAK_KEY);
+                if (bak) {
+                    adopt(defaultAppDataMerged(JSON.parse(bak)), '本地数据损坏，已从备份恢复');
+                    return;
+                }
+            } catch (err2) { /* fall through */ }
+            appData = defaultAppData();
+            lastLoadedRev = 0;
+            showToast('本地数据损坏，已重置为空');
+        }
+    }
+
+    function refreshTodayStr() {
+        const next = localDateStr();
+        if (next === todayStr) return false;
+        const note = document.getElementById('hpNote');
+        if (note) saveHpNote();
+        todayStr = next;
+        updateHomeStats();
+        renderTodayTasks();
+        const hist = document.getElementById('page-history');
+        if (hist && hist.classList.contains('active')) renderCalendar();
+        reviewDate = localDateStr();
+        const me = document.getElementById('page-me');
+        if (me && me.classList.contains('active')) renderMePage();
+        return true;
+    }
+
+    /* ---------- Timer ---------- */
+
+    function setDuration() {
+        const input = document.getElementById('durationInput');
+        const val = clampMinutes(parseInt(input.value, 10));
+        if (val == null) {
+            input.value = appData.settings.defaultTime;
+            return;
+        }
+        input.value = val;
+        appData.settings.defaultTime = val;
+        if (!isRunning) {
+            totalSeconds = val * 60;
+            timeLeft = totalSeconds;
+            accumulatedMs = 0;
+            sessionCreditMinutes = val;
+            sessionDate = todayStr;
+            updateUI();
+            updateMainButton();
+        }
+        saveData();
+    }
+
+    var isImmersive = false;
+    var controlsHideTimer = 0;
+    var CONTROLS_HIDE_MS = 4000;
+    var THEME_LIGHT = '#ff6b6b';
+    var THEME_DARK = '#1c2535';
+
+    function reducedMotion() {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    function setThemeColor(color) {
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', color);
+    }
+
+    function formatClock(secs) {
+        const n = Math.max(0, secs);
+        const m = Math.floor(n / 60).toString().padStart(2, '0');
+        const s = (n % 60).toString().padStart(2, '0');
+        return m + ':' + s;
+    }
+
+    function syncImmersiveLabels() {
+        const timeEl = document.getElementById('imTime');
+        const taskEl = document.getElementById('imTaskName');
+        if (timeEl) timeEl.textContent = formatClock(timeLeft);
+        if (taskEl) {
+            const task = appData.tasks.find(function (x) { return x.id === appData.currentTaskId; });
+            taskEl.textContent = task ? task.title : '自由专注';
+        }
+    }
+
+    function enterImmersive(opts) {
+        opts = opts || {};
+        if (isImmersive) {
+            syncImmersiveLabels();
+            return;
+        }
+        isImmersive = true;
+        hideImmersiveControls(true);
+        if (opts.instant || reducedMotion()) document.body.classList.add('immersive-instant');
+        document.body.classList.add('immersive');
+        setThemeColor(THEME_DARK);
+        document.title = '专注中';
+        syncImmersiveLabels();
+        if (opts.instant || reducedMotion()) {
+            requestAnimationFrame(function () {
+                document.body.classList.remove('immersive-instant');
+            });
+        }
+    }
+
+    function exitImmersive() {
+        if (!isImmersive) return;
+        isImmersive = false;
+        hideImmersiveControls(true);
+        document.body.classList.remove('immersive', 'immersive-instant');
+        setThemeColor(THEME_LIGHT);
+    }
+
+    function showImmersiveControls() {
+        if (!isImmersive) return;
+        const el = document.getElementById('immersiveControls');
+        if (!el) return;
+        syncImmersiveLabels();
+        el.classList.add('is-visible');
+        el.setAttribute('aria-hidden', 'false');
+        scheduleHideControls();
+    }
+
+    function hideImmersiveControls(immediate) {
+        clearTimeout(controlsHideTimer);
+        const el = document.getElementById('immersiveControls');
+        if (!el) return;
+        el.classList.remove('is-visible');
+        el.setAttribute('aria-hidden', 'true');
+    }
+
+    function scheduleHideControls() {
+        clearTimeout(controlsHideTimer);
+        controlsHideTimer = setTimeout(function () {
+            hideImmersiveControls();
+        }, CONTROLS_HIDE_MS);
+    }
+
+    function requestEndFocus() {
+        clearTimeout(controlsHideTimer);
+        showConfirm('结束本次专注并返回？未完成的时间不会记入统计。', { danger: true, okText: '结束专注' }).then(function (ok) {
+            if (!ok) {
+                if (isImmersive) scheduleHideControls();
+                return;
+            }
+            resetTimer();
+        });
+    }
+
+    function toggleTimer() {
+        if (isResting) { skipRest(); return; }
+        if (isRunning) pauseTimer();
+        else startTimer();
+    }
+
+    function startTimer() {
+        if (isRunning || finishing || isResting) return;
+        refreshTodayStr();
+        if (timeLeft <= 0) timeLeft = totalSeconds;
+        if (timeLeft === totalSeconds) {
+            accumulatedMs = 0;
+            sessionCreditMinutes = Math.max(1, Math.round(totalSeconds / 60));
+            sessionDate = todayStr;
+        }
+        isRunning = true;
+        runStartedAt = Date.now();
+        endTimeStamp = Date.now() + timeLeft * 1000;
+        document.body.classList.add('focus-mode');
+        clearInterval(timerId);
+        timerId = setInterval(tick, 200);
+        requestWakeLock();
+        updateMainButton();
+        updateUI();
+        saveData();
+        enterImmersive();
+    }
+
+    function resumeRunning(savedEnd) {
+        isRunning = true;
+        endTimeStamp = savedEnd;
+        runStartedAt = Date.now();
+        document.body.classList.add('focus-mode');
+        clearInterval(timerId);
+        timerId = setInterval(tick, 200);
+        requestWakeLock();
+        updateMainButton();
+        updateUI();
+        enterImmersive({ instant: true });
+    }
+
+    function tick() {
+        if (!isRunning) return;
+        const remainingMs = endTimeStamp - Date.now();
+        const remainingSeconds = Math.ceil(remainingMs / 1000);
+        if (remainingSeconds > 0) {
+            timeLeft = remainingSeconds;
+            updateUI();
+            if (Date.now() - lastPersist > 10000) {
+                saveData();
+                lastPersist = Date.now();
+            }
+        } else {
+            timeLeft = 0;
+            updateUI();
+            if (isResting) finishRest();
+            else finishTimer();
+        }
+    }
+
+    function pauseTimer() {
+        if (isResting) return;
+        if (!isRunning) return;
+        const remainingSeconds = Math.max(0, Math.ceil((endTimeStamp - Date.now()) / 1000));
+        timeLeft = remainingSeconds;
+        if (runStartedAt) accumulatedMs += Date.now() - runStartedAt;
+        clearInterval(timerId);
+        timerId = null;
+        isRunning = false;
+        document.body.classList.remove('focus-mode');
+        releaseWakeLock();
+        exitImmersive();
+        updateMainButton();
+        updateUI();
+        saveData();
+    }
+
+    function resetTimer() {
+        if (isResting) { skipRest(); return; }
+        clearInterval(timerId);
+        timerId = null;
+        isRunning = false;
+        finishing = false;
+        document.body.classList.remove('focus-mode');
+        exitImmersive();
+        timeLeft = totalSeconds;
+        accumulatedMs = 0;
+        endTimeStamp = 0;
+        runStartedAt = 0;
+        sessionCreditMinutes = Math.max(1, Math.round(totalSeconds / 60));
+        sessionDate = todayStr;
+        releaseWakeLock();
+        updateMainButton();
+        updateUI();
+        saveData();
+    }
+
+    var HG_TOP_Y = 22.2;
+    var HG_WAIST_Y = 76.0;
+    var HG_BOT_Y = 129.9;
+
+    function hgTopLevelPath(p) {
+        if (p <= 0.004) return 'M0 0 Z';
+        var surface = HG_WAIST_Y - p * (HG_WAIST_Y - HG_TOP_Y);
+        return 'M 0 ' + surface + ' L 100 ' + surface + ' L 100 ' + (HG_WAIST_Y + 3) + ' L 0 ' + (HG_WAIST_Y + 3) + ' Z';
+    }
+
+    function hgBotLevelPath(p) {
+        var fill = 1 - p;
+        if (fill <= 0.004) return 'M0 0 Z';
+        var surface = HG_BOT_Y - fill * (HG_BOT_Y - HG_WAIST_Y);
+        var room = Math.max(0, surface - (HG_WAIST_Y + 0.8));
+        var cone = Math.min(8, fill * 16, room * 0.9);
+        return 'M 0 ' + (HG_BOT_Y + 3) + ' L 100 ' + (HG_BOT_Y + 3) +
+            ' L 100 ' + surface + ' L 57 ' + surface +
+            ' Q 50 ' + (surface - cone) + ' 43 ' + surface +
+            ' L 0 ' + surface + ' Z';
+    }
+
+    function updateHourglass(progress) {
+        const wrap = document.getElementById('hourglass');
+        const p = Math.max(0, Math.min(1, progress));
+        const topPath = document.getElementById('hg-topLevelPath');
+        const botPath = document.getElementById('hg-botLevelPath');
+        if (topPath) topPath.setAttribute('d', hgTopLevelPath(p));
+        if (botPath) botPath.setAttribute('d', hgBotLevelPath(p));
+        if (wrap) {
+            const flowing = isRunning && p > 0.015 && p < 0.985;
+            wrap.classList.toggle('is-running', flowing);
+        }
+    }
+
+    function playHourglassFinish() {
+        const wrap = document.getElementById('hourglass');
+        if (!wrap) return;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        wrap.classList.remove('is-running');
+        wrap.classList.add('is-glowing');
+        if (!reduce) wrap.classList.add('is-flipping');
+        const ms = reduce ? 900 : 850;
+        setTimeout(function () {
+            wrap.classList.remove('is-flipping');
+            updateHourglass(1);
+            wrap.classList.remove('is-glowing');
+        }, ms);
+    }
+
+    function updateUI(opts) {
+        opts = opts || {};
+        const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+        const s = (timeLeft % 60).toString().padStart(2, '0');
+        const display = document.getElementById('timerDisplay');
+        if (display) display.textContent = m + ':' + s;
+
+        if (isResting && isRunning) document.title = '休息中';
+        else if (isImmersive && isRunning) document.title = '专注中';
+        else if (isRunning) document.title = m + ':' + s + ' - 专注中';
+        else if (timeLeft > 0 && timeLeft < totalSeconds) document.title = m + ':' + s + ' - 已暂停';
+        else document.title = APP_TITLE;
+
+        if (isImmersive) syncImmersiveLabels();
+
+        if (!opts.skipHourglass) {
+            const progress = totalSeconds > 0 ? Math.max(0, Math.min(1, timeLeft / totalSeconds)) : 0;
+            updateHourglass(progress);
+        }
+    }
+
+    function updateMainButton() {
+        const btn = document.getElementById('mainBtn');
+        if (!btn) return;
+        btn.classList.remove('btn-pause');
+        if (isResting) {
+            btn.textContent = '跳过休息';
+        } else if (isRunning) {
+            btn.textContent = '暂停';
+            btn.classList.add('btn-pause');
+        } else if (timeLeft > 0 && timeLeft < totalSeconds) {
+            btn.textContent = '继续';
+        } else {
+            btn.textContent = '开始';
+        }
+    }
+
+    function finishTimer(opts) {
+        opts = opts || {};
+        if (finishing) return;
+        finishing = true;
+        clearInterval(timerId);
+        timerId = null;
+        isRunning = false;
+        document.body.classList.remove('focus-mode');
+        releaseWakeLock();
+
+        refreshTodayStr();
+        const minutes = Math.max(1, Math.round(sessionCreditMinutes || (totalSeconds / 60) || 1));
+        const dateKey = sessionDate || todayStr;
+        if (!appData.dailyStats[dateKey]) appData.dailyStats[dateKey] = { count: 0, totalTime: 0 };
+        appData.dailyStats[dateKey].count += 1;
+        appData.dailyStats[dateKey].totalTime += minutes;
+
+        if (appData.currentTaskId != null) {
+            const task = appData.tasks.find(function (t) { return t.id === appData.currentTaskId; });
+            if (task) { task.timeSpent += minutes; task.updatedAt = Date.now(); }
+        }
+
+        const wasImmersive = isImmersive;
+        hideImmersiveControls(true);
+        updateHourglass(0);
+
+        savedFocusTotal = totalSeconds;
+        timeLeft = totalSeconds;
+        accumulatedMs = 0;
+        endTimeStamp = 0;
+        runStartedAt = 0;
+        saveData();
+        updateMainButton();
+        updateHomeStats();
+        renderTodayTasks();
+        try {
+            if (navigator.vibrate) navigator.vibrate([200, 80, 200, 80, 400]);
+        } catch (err) { /* ignore */ }
+
+        if (wasImmersive) {
+            const wrap = document.getElementById('hourglass');
+            if (wrap) {
+                wrap.classList.remove('is-running');
+                wrap.classList.add('is-glowing');
+            }
+            const glowMs = reducedMotion() ? 240 : 1100;
+            setTimeout(function () {
+                exitImmersive();
+                if (wrap) wrap.classList.remove('is-glowing', 'is-flipping');
+                updateHourglass(1);
+                updateUI({ skipHourglass: true });
+                afterFocusComplete(opts);
+            }, glowMs);
+            return;
+        }
+
+        playHourglassFinish();
+        updateUI({ skipHourglass: true });
+        afterFocusComplete(opts);
+    }
+
+    function afterFocusComplete(opts) {
+        opts = opts || {};
+        const auto = appData.settings.autoRest !== false;
+        if (auto && !opts.stale) {
+            showToast('专注完成，开始休息一会儿。');
+            beginRest();
+        } else {
+            showToast('专注完成！休息一下。');
+            finishing = false;
+        }
+    }
+
+    function beginRest(opts) {
+        opts = opts || {};
+        exitImmersive();
+        document.body.classList.remove('focus-mode');
+        isResting = true;
+        isRunning = true;
+        finishing = false;
+        if (!opts.keepFocusTotal) savedFocusTotal = savedFocusTotal || totalSeconds;
+        if (opts.savedFocusTotal) savedFocusTotal = opts.savedFocusTotal;
+        const mins = clampRest(appData.settings.restTime);
+        totalSeconds = mins * 60;
+        if (opts.endTimeStamp) {
+            endTimeStamp = opts.endTimeStamp;
+            timeLeft = Math.max(1, Math.ceil((endTimeStamp - Date.now()) / 1000));
+        } else {
+            timeLeft = totalSeconds;
+            endTimeStamp = Date.now() + timeLeft * 1000;
+        }
+        restMessage = opts.message || REST_MSGS[Math.floor(Math.random() * REST_MSGS.length)];
+        const msgEl = document.getElementById('restMsg');
+        if (msgEl) msgEl.textContent = restMessage;
+        document.body.classList.add('resting');
+        setThemeColor(THEME_REST);
+        clearInterval(timerId);
+        timerId = setInterval(tick, 200);
+        requestWakeLock();
+        updateMainButton();
+        updateUI();
+        saveData();
+    }
+
+    function skipRest() {
+        if (!isResting) return;
+        finishRest({ skipped: true });
+    }
+
+    function finishRest(opts) {
+        opts = opts || {};
+        clearInterval(timerId);
+        timerId = null;
+        isRunning = false;
+        isResting = false;
+        finishing = false;
+        document.body.classList.remove('resting', 'focus-mode');
+        releaseWakeLock();
+        setThemeColor(THEME_LIGHT);
+        const restoreTotal = (savedFocusTotal > 0) ? savedFocusTotal : ((appData.settings.defaultTime || 45) * 60);
+        totalSeconds = restoreTotal;
+        timeLeft = totalSeconds;
+        accumulatedMs = 0;
+        endTimeStamp = 0;
+        runStartedAt = 0;
+        updateMainButton();
+        updateUI();
+        saveData();
+        if (opts.skipped) {
+            showToast('休息就到这里，回来时不着急。');
+        } else if (!opts.silent) {
+            try { if (navigator.vibrate) navigator.vibrate([160, 80, 220]); } catch (err) { /* ignore */ }
+            showToast('休息好了，回来时更轻盈一点。');
+        }
+    }
+
+
+    function restoreTimer() {
+        const defMin = appData.settings.defaultTime || 45;
+        const t = appData.timer;
+        totalSeconds = (t && t.totalSeconds > 0) ? t.totalSeconds : defMin * 60;
+        sessionCreditMinutes = (t && t.sessionCreditMinutes) ? t.sessionCreditMinutes : Math.max(1, Math.round(totalSeconds / 60));
+        sessionDate = (t && t.sessionDate) || todayStr;
+        accumulatedMs = (t && t.accumulatedMs) || 0;
+
+        const input = document.getElementById('durationInput');
+        if (input) input.value = defMin;
+
+        savedFocusTotal = (t && t.savedFocusTotal > 0) ? t.savedFocusTotal : ((t && t.mode === 'rest') ? (defMin * 60) : totalSeconds);
+        restMessage = (t && t.restMessage) || REST_MSGS[0];
+
+        if (t && t.isRunning && t.endTimeStamp) {
+            const remaining = Math.ceil((t.endTimeStamp - Date.now()) / 1000);
+            const isRest = t.mode === 'rest' || t.isResting;
+            if (isRest) {
+                if (remaining <= 0) {
+                    finishRest({ silent: remaining < -120 });
+                } else {
+                    beginRest({
+                        endTimeStamp: t.endTimeStamp,
+                        savedFocusTotal: savedFocusTotal,
+                        message: restMessage,
+                        keepFocusTotal: true
+                    });
+                }
+            } else if (remaining <= 0) {
+                timeLeft = 0;
+                isRunning = false;
+                finishTimer({ stale: remaining < -120 });
+            } else {
+                timeLeft = remaining;
+                resumeRunning(t.endTimeStamp);
+            }
+        } else {
+            if (t && typeof t.timeLeft === 'number' && t.timeLeft > 0 && t.timeLeft <= totalSeconds) {
+                timeLeft = t.timeLeft;
+            } else {
+                timeLeft = totalSeconds;
+            }
+            isRunning = false;
+            updateUI();
+            updateMainButton();
+        }
+    }
+
+    /* ---------- Tasks ---------- */
+
+    function addTask() {
+        const input = document.getElementById('newTaskInput');
+        const val = (input.value || '').trim();
+        if (!val) return;
+        refreshTodayStr();
+        const task = {
+            id: Date.now(),
+            title: val,
+            status: 'todo',
+            createDate: todayStr,
+            doneDate: null,
+            timeSpent: 0,
+            updatedAt: Date.now()
+        };
+        appData.tasks.push(task);
+        input.value = '';
+        if (appData.currentTaskId == null) selectTask(task.id, false);
+        saveData();
+        renderTodayTasks();
+    }
+
+    function toggleTaskStatus(id) {
+        const task = appData.tasks.find(function (t) { return t.id === id; });
+        if (!task) return;
+        refreshTodayStr();
+        if (task.status === 'todo') {
+            task.status = 'done';
+            task.doneDate = todayStr;
+        } else {
+            task.status = 'todo';
+            task.doneDate = null;
+        }
+        task.updatedAt = Date.now();
+        saveData();
+        renderTodayTasks();
+    }
+
+    function selectTask(id, goTimer) {
+        appData.currentTaskId = id;
+        saveData();
+        renderTodayTasks();
+        updateCurrentTaskDisplay();
+        if (goTimer) switchPage('timer');
+    }
+
+    function clearCurrentTask() {
+        appData.currentTaskId = null;
+        saveData();
+        renderTodayTasks();
+        updateCurrentTaskDisplay();
+    }
+
+    function updateCurrentTaskDisplay() {
+        const text = document.getElementById('currentTaskText');
+        const clearBtn = document.getElementById('clearTaskBtn');
+        const t = appData.tasks.find(function (x) { return x.id === appData.currentTaskId; });
+        if (t) {
+            text.textContent = '正在专注：' + t.title;
+            clearBtn.hidden = false;
+        } else {
+            if (appData.currentTaskId != null) appData.currentTaskId = null;
+            text.textContent = '当前任务：自由专注';
+            clearBtn.hidden = true;
+        }
+    }
+
+    function deleteTask(id) {
+        showConfirm('删除此任务？', { danger: true, okText: '删除' }).then(function (ok) {
+            if (!ok) return;
+            appData.tasks = appData.tasks.filter(function (t) { return t.id !== id; });
+            if (!appData.deletedTaskIds) appData.deletedTaskIds = [];
+            if (appData.deletedTaskIds.indexOf(id) === -1) appData.deletedTaskIds.push(id);
+            if (appData.currentTaskId === id) {
+                appData.currentTaskId = null;
+                updateCurrentTaskDisplay();
+            }
+            saveData();
+            renderTodayTasks();
+        });
+    }
+
+    function startEditTitle(id, titleEl) {
+        const task = appData.tasks.find(function (t) { return t.id === id; });
+        if (!task) return;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'title-edit';
+        input.value = task.title;
+        input.maxLength = 80;
+        input.setAttribute('aria-label', '编辑任务名称');
+        titleEl.replaceWith(input);
+        input.focus();
+        input.select();
+        let done = false;
+        const commit = function () {
+            if (done) return;
+            done = true;
+            const v = input.value.trim();
+            if (v && v !== task.title) {
+                task.title = v;
+                task.updatedAt = Date.now();
+            }
+            saveData();
+            renderTodayTasks();
+            updateCurrentTaskDisplay();
+        };
+        input.addEventListener('blur', commit);
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+            if (e.key === 'Escape') {
+                input.value = task.title;
+                input.blur();
+            }
+        });
+    }
+
+    function renderTodayTasks() {
+        const list = document.getElementById('todayTaskList');
+        const empty = document.getElementById('noTasksMsg');
+        if (!list) return;
+        list.innerHTML = '';
+        const visible = appData.tasks.filter(function (t) {
+            return t.status === 'todo' || (t.status === 'done' && t.doneDate === todayStr);
+        });
+        empty.style.display = visible.length === 0 ? 'block' : 'none';
+        visible.forEach(function (task) {
+            const isDone = task.status === 'done';
+            const isActive = task.id === appData.currentTaskId;
+            const li = document.createElement('li');
+            li.className = 'task-row' + (isDone ? ' done' : '') + (isActive && !isDone ? ' is-active' : '');
+            li.dataset.id = String(task.id);
+
+            let meta = '累计: ' + task.timeSpent + 'm';
+            if (task.createDate && task.createDate !== todayStr) {
+                meta += ' · ' + formatMonthDay(task.createDate) + ' 起';
+            }
+            const chip = (isActive && !isDone) ? '<span class="current-chip">当前</span>' : '';
+
+            li.innerHTML =
+                '<button type="button" class="task-check" data-action="toggle" data-id="' + task.id + '" aria-label="' + (isDone ? '标为未完成' : '标为完成') + '"><span>' + (isDone ? '✔' : '') + '</span></button>' +
+                '<div class="task-info">' +
+                    '<button type="button" class="task-title-btn task-title" data-action="edit" data-id="' + task.id + '" title="点按改名">' + escapeHtml(task.title) + chip + '</button>' +
+                    '<div class="task-meta">' + escapeHtml(meta) + '</div>' +
+                '</div>' +
+                (isDone ? '' : '<button type="button" class="action-btn play-icon" data-action="play" data-id="' + task.id + '" aria-label="开始专注此任务">▶</button>') +
+                '<button type="button" class="action-btn" data-action="delete" data-id="' + task.id + '" aria-label="删除任务">🗑</button>';
+            list.appendChild(li);
+        });
+    }
+
+    /* ---------- Calendar ---------- */
+
+    function shiftMonth(delta) {
+        viewMonth += delta;
+        while (viewMonth < 0) { viewMonth += 12; viewYear -= 1; }
+        while (viewMonth > 11) { viewMonth -= 12; viewYear += 1; }
+        const detail = document.getElementById('dayDetailArea');
+        if (detail) detail.style.display = 'none';
+        renderCalendar();
+    }
+
+    function renderCalendar() {
+        document.getElementById('calendarLabel').textContent = viewYear + '年 ' + (viewMonth + 1) + '月';
+        const grid = document.getElementById('calendarGrid');
+        grid.innerHTML = '';
+        const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+        const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+        const now = new Date();
+        const isThisMonth = viewYear === now.getFullYear() && viewMonth === now.getMonth();
+
+        for (let i = 0; i < firstDay; i++) {
+            const spacer = document.createElement('div');
+            grid.appendChild(spacer);
+        }
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateStr = viewYear + '-' + String(viewMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+            const cell = document.createElement('button');
+            cell.type = 'button';
+            cell.className = 'calendar-day';
+            const review = appData.dailyReviews[dateStr];
+            const stats = appData.dailyStats[dateStr];
+            const hasFocus = stats && stats.totalTime > 0;
+            const hasTasks = appData.tasks.some(function (t) {
+                return t.createDate === dateStr || t.doneDate === dateStr;
+            });
+            if (hasFocus || hasTasks) cell.classList.add('has-data');
+            if (review) cell.classList.add('has-hp');
+            if (isThisMonth && dateStr === todayStr) cell.classList.add('is-today');
+            const num = document.createElement('span');
+            num.className = 'cal-num';
+            num.textContent = String(d);
+            const bar = document.createElement('span');
+            bar.className = 'cal-hp';
+            const fill = document.createElement('span');
+            fill.className = 'cal-hp-fill';
+            if (review) {
+                fill.style.width = review.score + '%';
+                fill.style.background = hpColor(review.score);
+            }
+            bar.appendChild(fill);
+            cell.appendChild(num);
+            cell.appendChild(bar);
+            cell.addEventListener('click', function () { showHistoryDetail(dateStr, cell); });
+            grid.appendChild(cell);
+        }
+    }
+
+    function showHistoryDetail(dateStr, cell) {
+        document.querySelectorAll('.calendar-day').forEach(function (el) { el.classList.remove('active'); });
+        cell.classList.add('active');
+        const area = document.getElementById('dayDetailArea');
+        area.style.display = 'block';
+        const stats = appData.dailyStats[dateStr] || { totalTime: 0 };
+        document.getElementById('detailDate').textContent = dateStr;
+        document.getElementById('detailTotal').textContent = '总专注: ' + stats.totalTime + 'm';
+        renderHistoryReview(dateStr);
+
+        const list = document.getElementById('historyTaskList');
+        list.innerHTML = '';
+        const tasks = appData.tasks.filter(function (t) {
+            return t.doneDate === dateStr || (t.createDate === dateStr && t.status === 'todo');
+        });
+        if (tasks.length === 0) {
+            const hasReview = !!appData.dailyReviews[dateStr];
+            list.innerHTML = '<div class="empty-state" style="margin-top:12px;">' +
+                (stats.totalTime > 0 ? '有专注记录，但没有任务条目' : (hasReview ? '这一天写下了血条，还没有任务条目' : '暂无记录')) +
+                '</div>';
+            return;
+        }
+        tasks.forEach(function (t) {
+            const isDone = t.doneDate === dateStr;
+            const li = document.createElement('li');
+            li.className = 'task-row' + (isDone ? ' done' : '');
+            li.style.padding = '10px 12px';
+            li.innerHTML =
+                '<span class="task-title" style="flex:1;">' + escapeHtml(t.title) + '</span>' +
+                '<span style="font-size:0.75rem;color:' + (isDone ? '#888' : '#ff6b6b') + ';">' +
+                (isDone ? '已完成' : '未完成') +
+                (t.timeSpent ? ' · ' + t.timeSpent + 'm' : '') +
+                '</span>';
+            list.appendChild(li);
+        });
+    }
+
+    function switchPage(pid) {
+        document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
+        const page = document.getElementById('page-' + pid);
+        if (page) page.classList.add('active');
+        document.querySelectorAll('.nav-btn').forEach(function (b) {
+            b.classList.toggle('active', b.getAttribute('data-page') === pid);
+        });
+        if (pid === 'history') renderCalendar();
+        if (pid === 'me') renderMePage();
+    }
+
+    function updateHomeStats() {
+        const stats = appData.dailyStats[todayStr] || { count: 0, totalTime: 0 };
+        document.getElementById('todayTime').textContent = stats.totalTime + 'm';
+        document.getElementById('focusCount').textContent = String(stats.count);
+    }
+
+    /* ---------- Backup ---------- */
+
+    function buildExportPayload() {
+        const settings = Object.assign({}, appData.settings || {});
+        delete settings.githubToken;
+        delete settings.gistToken;
+        delete settings.token;
+        return {
+            app: APP_TITLE,
+            version: 6,
+            exportedAt: new Date().toISOString(),
+            data: {
+                tasks: appData.tasks,
+                dailyStats: appData.dailyStats,
+                settings: settings,
+                currentTaskId: appData.currentTaskId,
+                dailyReviews: appData.dailyReviews,
+                quotes: appData.quotes,
+                bootShownDate: appData.bootShownDate,
+                deletedQuoteIds: appData.deletedQuoteIds,
+                deletedTaskIds: appData.deletedTaskIds,
+                meta: appData.meta
+            }
+        };
+    }
+
+    function markExported() {
+        if (!appData.settings) appData.settings = {};
+        appData.settings.lastExportedAt = Date.now();
+        saveData();
+    }
+
+    function exportBackup() {
+        markExported();
+        const payload = JSON.stringify(buildExportPayload(), null, 2);
+        const blob = new Blob([payload], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '番茄专注-备份-' + todayStr + '.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        showToast('已导出备份文件');
+    }
+
+    function copyBackup() {
+        const payload = JSON.stringify(buildExportPayload(), null, 2);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(payload).then(function () {
+                markExported();
+                showToast('已复制到剪贴板');
+            }).catch(function () {
+                fallbackCopy(payload);
+            });
+        } else {
+            fallbackCopy(payload);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            markExported();
+            showToast('已复制到剪贴板');
+        } catch (err) {
+            showToast('复制失败，请改用导出文件');
+        }
+        ta.remove();
+    }
+
+    function parseImportPayload(text) {
+        const raw = JSON.parse(text);
+        if (!raw || typeof raw !== 'object') throw new Error('格式无效');
+        if (raw.data && typeof raw.data === 'object') return defaultAppDataMerged(raw.data);
+        if (raw.tasks || raw.dailyStats || raw.settings) return defaultAppDataMerged(raw);
+        throw new Error('不是可识别的备份文件');
+    }
+
+    function importFromFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function () {
+            try {
+                const merged = parseImportPayload(String(reader.result || ''));
+                showConfirm('导入将覆盖当前所有数据，是否继续？', { danger: true, okText: '导入' }).then(function (ok) {
+                    if (!ok) return;
+                    if (isRunning) {
+                        clearInterval(timerId);
+                        isRunning = false;
+                        document.body.classList.remove('focus-mode');
+                        releaseWakeLock();
+                    }
+                    stopAllTimers();
+                    appData = merged;
+                    appData.timer = null;
+                    lastLoadedRev = diskRev(appData);
+                    saveData({ replace: true });
+                    restoreTimer();
+                    renderTodayTasks();
+                    updateCurrentTaskDisplay();
+                    updateHomeStats();
+                    updateSettingsForm();
+                    updateUI();
+                    updateMainButton();
+                    if (document.getElementById('page-history').classList.contains('active')) renderCalendar();
+                    if (document.getElementById('page-me').classList.contains('active')) renderMePage();
+                    closeSheet();
+                    showToast('备份已导入');
+                });
+            } catch (err) {
+                showToast('导入失败：' + (err.message || '无法解析文件'));
+            }
+        };
+        reader.onerror = function () { showToast('读取文件失败'); };
+        reader.readAsText(file, 'utf-8');
+    }
+
+    /* ---------- UI helpers ---------- */
+
+    function showToast(msg, ms) {
+        const el = document.getElementById('toast');
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { el.classList.remove('show'); }, ms || 2400);
+    }
+
+    function showConfirm(msg, opts) {
+        opts = opts || {};
+        const mask = document.getElementById('confirmMask');
+        document.getElementById('confirmMsg').textContent = msg;
+        const okBtn = document.getElementById('confirmOk');
+        okBtn.textContent = opts.okText || '确定';
+        document.getElementById('confirmCancel').textContent = opts.cancelText || '取消';
+        okBtn.className = 'btn ' + (opts.danger ? 'btn-danger' : 'btn-primary');
+        mask.classList.add('show');
+        return new Promise(function (resolve) {
+            confirmResolver = resolve;
+        });
+    }
+
+    function closeConfirm(result) {
+        document.getElementById('confirmMask').classList.remove('show');
+        if (confirmResolver) {
+            const r = confirmResolver;
+            confirmResolver = null;
+            r(result);
+        }
+    }
+
+    function openSheet() { fillSyncForm(); document.getElementById('sheetMask').classList.add('show'); }
+    function closeSheet() { document.getElementById('sheetMask').classList.remove('show'); }
+
+    async function requestWakeLock() {
+        try {
+            if (!('wakeLock' in navigator)) return;
+            await releaseWakeLock();
+            wakeLock = await navigator.wakeLock.request('screen');
+        } catch (err) {
+            wakeLock = null;
+        }
+    }
+
+    async function releaseWakeLock() {
+        try {
+            if (wakeLock) await wakeLock.release();
+        } catch (err) { /* ignore */ }
+        wakeLock = null;
+    }
+
+    function installManifest() {
+        try {
+            const icon = document.querySelector('link[rel="apple-touch-icon"]');
+            const iconHref = icon ? icon.getAttribute('href') : '';
+            const manifest = {
+                name: APP_TITLE,
+                short_name: APP_TITLE,
+                description: '番茄钟与今日待办',
+                display: 'standalone',
+                start_url: location.href.split('#')[0],
+                scope: location.href.replace(/[^/]+$/, ''),
+                background_color: '#ffffff',
+                theme_color: '#ff6b6b',
+                lang: 'zh-CN',
+                icons: iconHref ? [
+                    { src: iconHref, sizes: '180x180', type: 'image/png', purpose: 'any' }
+                ] : []
+            };
+            const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+            let link = document.querySelector('link[rel="manifest"]');
+            if (!link) {
+                link = document.createElement('link');
+                link.rel = 'manifest';
+                document.head.appendChild(link);
+            }
+            link.href = URL.createObjectURL(blob);
+        } catch (err) { /* file:// or browser limit */ }
+    }
+
+    function bindEvents() {
+        document.getElementById('mainBtn').addEventListener('click', toggleTimer);
+        document.getElementById('resetBtn').addEventListener('click', resetTimer);
+        document.getElementById('immersiveHit').addEventListener('click', function () {
+            showImmersiveControls();
+        });
+        document.getElementById('imPause').addEventListener('click', function (e) {
+            e.stopPropagation();
+            pauseTimer();
+        });
+        document.getElementById('imEnd').addEventListener('click', function (e) {
+            e.stopPropagation();
+            requestEndFocus();
+        });
+        document.getElementById('durationInput').addEventListener('change', setDuration);
+        document.getElementById('durationInput').addEventListener('blur', setDuration);
+
+        document.getElementById('addTaskBtn').addEventListener('click', addTask);
+        document.getElementById('newTaskInput').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); addTask(); }
+        });
+
+        document.getElementById('todayTaskList').addEventListener('click', function (e) {
+            const btn = e.target.closest('[data-action]');
+            if (!btn) return;
+            const id = Number(btn.getAttribute('data-id'));
+            const action = btn.getAttribute('data-action');
+            if (action === 'toggle') toggleTaskStatus(id);
+            else if (action === 'play') selectTask(id, true);
+            else if (action === 'delete') deleteTask(id);
+            else if (action === 'edit') startEditTitle(id, btn);
+        });
+
+        document.getElementById('clearTaskBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            clearCurrentTask();
+        });
+
+        document.getElementById('prevMonthBtn').addEventListener('click', function () { shiftMonth(-1); });
+        document.getElementById('nextMonthBtn').addEventListener('click', function () { shiftMonth(1); });
+
+        document.querySelectorAll('.nav-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () { switchPage(btn.getAttribute('data-page')); });
+        });
+
+        document.getElementById('settingsBtn').addEventListener('click', openSheet);
+        document.getElementById('sheetClose').addEventListener('click', closeSheet);
+        document.getElementById('sheetMask').addEventListener('click', function (e) {
+            if (e.target.id === 'sheetMask') closeSheet();
+        });
+        document.getElementById('exportBtn').addEventListener('click', exportBackup);
+        document.getElementById('copyBtn').addEventListener('click', copyBackup);
+        document.getElementById('importBtn').addEventListener('click', function () {
+            document.getElementById('importFile').click();
+        });
+        document.getElementById('importFile').addEventListener('change', function (e) {
+            const file = e.target.files && e.target.files[0];
+            e.target.value = '';
+            importFromFile(file);
+        });
+
+        document.getElementById('restInput').addEventListener('change', setRestDuration);
+        document.getElementById('restInput').addEventListener('blur', setRestDuration);
+        document.getElementById('autoRestChk').addEventListener('change', setAutoRest);
+
+        document.getElementById('hpPrevDay').addEventListener('click', function () { shiftReviewDate(-1); });
+        document.getElementById('hpNextDay').addEventListener('click', function () { shiftReviewDate(1); });
+        document.getElementById('hpTodayBtn').addEventListener('click', function () { reviewDate = todayStr; renderMePage(); });
+        document.getElementById('hpDate').addEventListener('change', function () {
+            const v = document.getElementById('hpDate').value;
+            if (!v) return;
+            reviewDate = v > todayStr ? todayStr : v;
+            renderMePage();
+        });
+        const track = document.getElementById('hpTrack');
+        const onHpPtr = function (e) {
+            if (e.pointerType === 'mouse' && e.buttons !== 1 && e.type !== 'pointerdown') return;
+            setHpScore(hpScoreFromPointer(e));
+        };
+        track.addEventListener('pointerdown', function (e) {
+            hpDragging = true;
+            try { track.setPointerCapture(e.pointerId); } catch (err) {}
+            onHpPtr(e);
+        });
+        track.addEventListener('pointermove', function (e) {
+            if (!hpDragging) return;
+            onHpPtr(e);
+        });
+        const endHp = function () { hpDragging = false; };
+        track.addEventListener('pointerup', endHp);
+        track.addEventListener('pointercancel', endHp);
+        track.addEventListener('keydown', function (e) {
+            const review = appData.dailyReviews[reviewDate];
+            let v = review ? review.score : 0;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); setHpScore(v + (e.shiftKey ? 10 : 1)); }
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); setHpScore(v - (e.shiftKey ? 10 : 1)); }
+            else if (e.key === 'Home') { e.preventDefault(); setHpScore(0); }
+            else if (e.key === 'End') { e.preventDefault(); setHpScore(100); }
+        });
+        document.getElementById('dimRow').addEventListener('click', function (e) {
+            const chip = e.target.closest('.dim-chip');
+            if (!chip) return;
+            toggleDim(chip.getAttribute('data-dim'));
+        });
+        document.getElementById('hpNote').addEventListener('change', saveHpNote);
+        document.getElementById('hpNote').addEventListener('blur', saveHpNote);
+
+        document.getElementById('quoteInput').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); addQuote(); }
+        });
+        document.getElementById('quoteSearch').addEventListener('input', renderQuotes);
+        document.getElementById('quoteList').addEventListener('click', function (e) {
+            const btn = e.target.closest('[data-q-action]');
+            if (!btn) return;
+            const id = Number(btn.getAttribute('data-id'));
+            const action = btn.getAttribute('data-q-action');
+            const card = btn.closest('.quote-card');
+            if (action === 'pin') togglePinQuote(id);
+            else if (action === 'edit') editQuote(id, card);
+            else if (action === 'del') deleteQuote(id);
+        });
+        document.getElementById('bootDismiss').addEventListener('click', dismissBoot);
+        document.getElementById('bootMask').addEventListener('click', function (e) {
+            if (e.target.id === 'bootMask') dismissBoot();
+        });
+        document.getElementById('dayDetailArea').addEventListener('click', function (e) {
+            const btn = e.target.closest('[data-rate-date]');
+            if (!btn) return;
+            goRateDate(btn.getAttribute('data-rate-date'));
+        });
+
+        document.getElementById('confirmOk').addEventListener('click', function () { closeConfirm(true); });
+        document.getElementById('confirmCancel').addEventListener('click', function () { closeConfirm(false); });
+        document.getElementById('confirmMask').addEventListener('click', function (e) {
+            if (e.target.id === 'confirmMask') closeConfirm(false);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== 'Escape') return;
+            if (document.getElementById('confirmMask').classList.contains('show')) closeConfirm(false);
+            else if (document.getElementById('sheetMask').classList.contains('show')) closeSheet();
+            else if (isImmersive && document.getElementById('immersiveControls').classList.contains('is-visible')) hideImmersiveControls();
+            else if (isImmersive) showImmersiveControls();
+        });
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                const note = document.getElementById('hpNote');
+                if (note && document.activeElement === note) saveHpNote();
+                saveData();
+            } else {
+                refreshTodayStr();
+                applyIncomingStorage();
+                if (isRunning) {
+                    tick();
+                    requestWakeLock();
+                }
+                scheduleSync('visible');
+            }
+        });
+        window.addEventListener('pagehide', function () { saveData(); });
+        window.addEventListener('storage', function (e) {
+            if (e.key && e.key !== STORAGE_KEY) return;
+            applyIncomingStorage();
+        });
+        document.addEventListener('click', requestPersistentStorage, { once: true });
+        window.addEventListener('online', function () { scheduleSync('online'); });
+        window.addEventListener('offline', function () { setSyncStatus('warn', '离线，稍后同步'); });
+        document.getElementById('syncConnectBtn').addEventListener('click', connectSync);
+        document.getElementById('syncDisconnectBtn').addEventListener('click', disconnectSync);
+        document.getElementById('syncCopyId').addEventListener('click', copyGistId);
+        document.getElementById('syncToken').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); connectSync(); }
+        });
+        document.getElementById('syncGistId').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); connectSync(); }
+        });
+
+        setInterval(refreshTodayStr, 30000);
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', function () {
+                const el = document.activeElement;
+                if (el && el.matches && el.matches('input, textarea')) {
+                    setTimeout(function () {
+                        el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                    }, 50);
+                }
+            });
+        }
+    }
+
+
+    function stopAllTimers() {
+        clearInterval(timerId);
+        timerId = null;
+        isRunning = false;
+        isResting = false;
+        finishing = false;
+        document.body.classList.remove('focus-mode', 'resting');
+        exitImmersive();
+        releaseWakeLock();
+        setThemeColor(THEME_LIGHT);
+    }
+
+    function updateSettingsForm() {
+        const restInput = document.getElementById('restInput');
+        const autoChk = document.getElementById('autoRestChk');
+        if (restInput) restInput.value = clampRest(appData.settings.restTime);
+        if (autoChk) autoChk.checked = appData.settings.autoRest !== false;
+        fillSyncForm();
+    }
+
+    function setRestDuration() {
+        const input = document.getElementById('restInput');
+        if (!input) return;
+        const v = clampRest(input.value);
+        input.value = v;
+        appData.settings.restTime = v;
+        saveData();
+    }
+
+    function setAutoRest() {
+        const chk = document.getElementById('autoRestChk');
+        if (!chk) return;
+        appData.settings.autoRest = !!chk.checked;
+        saveData();
+    }
+
+    function renderHistoryReview(dateStr) {
+        const box = document.getElementById('detailReview');
+        if (!box) return;
+        const review = appData.dailyReviews[dateStr];
+        const parts = [];
+        if (review) {
+            parts.push('<div class="detail-hp-row">');
+            parts.push('<div class="detail-hp-score" style="color:' + hpColor(review.score) + ';">' + review.score + '</div>');
+            parts.push('<div class="detail-hp-bar"><span style="width:' + review.score + '%;background:' + hpColor(review.score) + ';"></span></div>');
+            parts.push('</div>');
+            const onDims = DIM_KEYS.filter(function (d) { return review.dims && review.dims[d.key]; });
+            if (onDims.length) {
+                parts.push('<div class="detail-dims">');
+                onDims.forEach(function (d) {
+                    parts.push('<span class="dim-chip on"><span class="star">★</span>' + d.label + '</span>');
+                });
+                parts.push('</div>');
+            }
+            if (review.note) parts.push('<p class="detail-note">' + escapeHtml(review.note) + '</p>');
+        }
+        parts.push('<button type="button" class="detail-rate-btn" data-rate-date="' + dateStr + '">' +
+            (review ? '修改这一天的评价' : '补评这一天') + '</button>');
+        box.innerHTML = parts.join('');
+        box.style.display = 'block';
+    }
+
+    function goRateDate(dateStr) {
+        reviewDate = dateStr;
+        switchPage('me');
+        renderMePage();
+    }
+
+    function ensureReview(dateStr) {
+        if (!appData.dailyReviews[dateStr]) {
+            appData.dailyReviews[dateStr] = {
+                score: 0,
+                dims: { done: false, joy: false, innov: false, health: false, pace: false },
+                note: '',
+                updatedAt: 0
+            };
+        }
+        return appData.dailyReviews[dateStr];
+    }
+
+    function shiftReviewDate(delta) {
+        const d = new Date(reviewDate + 'T12:00:00');
+        d.setDate(d.getDate() + delta);
+        const next = localDateStr(d);
+        if (next > todayStr) return;
+        reviewDate = next;
+        renderMePage();
+    }
+
+    function renderMePage() {
+        if (!reviewDate) reviewDate = todayStr;
+        if (reviewDate > todayStr) reviewDate = todayStr;
+        const dateInput = document.getElementById('hpDate');
+        if (dateInput) {
+            dateInput.value = reviewDate;
+            dateInput.max = todayStr;
+        }
+        const dateLab = document.getElementById('hpDateLabel');
+        if (dateLab) {
+            const d = new Date(reviewDate + 'T12:00:00');
+            const week = '日一二三四五六'.charAt(d.getDay());
+            dateLab.textContent = (reviewDate === todayStr ? '今天 · ' : '') +
+                (d.getMonth() + 1) + '月' + d.getDate() + '日 周' + week;
+        }
+        const todayBtn = document.getElementById('hpTodayBtn');
+        if (todayBtn) todayBtn.style.display = reviewDate === todayStr ? 'none' : 'inline';
+
+        const stats = appData.dailyStats[reviewDate] || { count: 0, totalTime: 0 };
+        const ref = document.getElementById('hpFocusRef');
+        if (ref) {
+            if (stats.totalTime > 0) {
+                ref.textContent = '这一天专注 ' + stats.totalTime + ' 分钟 · ' + stats.count + ' 次，仅作参考';
+            } else {
+                ref.textContent = reviewDate === todayStr ? '今天还没有专注记录，血条仍然可以打' : '这一天还没有专注记录';
+            }
+        }
+
+        const review = appData.dailyReviews[reviewDate];
+        const score = review ? review.score : 0;
+        const has = !!(review && (review.updatedAt || review.score || review.note || (review.dims && Object.keys(review.dims).some(function (k) { return review.dims[k]; }))));
+        paintHp(has ? score : null, review && review.dims);
+        const note = document.getElementById('hpNote');
+        if (note) note.value = review && review.note ? review.note : '';
+        renderWeekChart();
+        renderQuotes();
+        updateSaveStatus();
+    }
+
+    function paintHp(score, dims) {
+        const scoreEl = document.getElementById('hpScore');
+        const unitEl = document.getElementById('hpUnit');
+        const fill = document.getElementById('hpFill');
+        const track = document.getElementById('hpTrack');
+        const unset = (score == null);
+        const v = unset ? 0 : score;
+        if (scoreEl) {
+            scoreEl.textContent = unset ? '—' : String(v);
+            scoreEl.style.color = unset ? '#d0d5d8' : hpColor(v);
+        }
+        if (unitEl) unitEl.style.opacity = unset ? '0.4' : '1';
+        if (fill) {
+            fill.style.width = v + '%';
+            if (track) fill.style.backgroundSize = track.clientWidth + 'px 100%';
+        }
+        if (track) track.setAttribute('aria-valuenow', String(v));
+        document.querySelectorAll('#dimRow .dim-chip').forEach(function (chip) {
+            const key = chip.getAttribute('data-dim');
+            const on = !!(dims && dims[key]);
+            chip.classList.toggle('on', on);
+            chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+    }
+
+    function setHpScore(v) {
+        v = Math.max(0, Math.min(100, Math.round(v)));
+        const review = ensureReview(reviewDate);
+        const now = Date.now();
+        review.score = v;
+        review.scoreAt = now;
+        review.updatedAt = now;
+        paintHp(v, review.dims);
+        saveData();
+        renderWeekChart();
+    }
+
+    function hpScoreFromPointer(ev) {
+        const track = document.getElementById('hpTrack');
+        const rect = track.getBoundingClientRect();
+        const x = (ev.clientX != null ? ev.clientX : (ev.touches && ev.touches[0].clientX)) - rect.left;
+        return Math.max(0, Math.min(100, Math.round((x / rect.width) * 100)));
+    }
+
+    function toggleDim(key) {
+        const review = ensureReview(reviewDate);
+        review.dims[key] = !review.dims[key];
+        const now = Date.now();
+        review.dimsAt = now;
+        review.updatedAt = now;
+        paintHp(review.score, review.dims);
+        saveData();
+    }
+
+    function saveHpNote() {
+        const note = document.getElementById('hpNote');
+        const review = ensureReview(reviewDate);
+        review.note = (note && note.value || '').trim().slice(0, 80);
+        const now = Date.now();
+        review.noteAt = now;
+        review.updatedAt = now;
+        saveData();
+    }
+
+    function weekStart(d) {
+        d = new Date(d.getTime());
+        const day = d.getDay();
+        const diff = (day === 0 ? -6 : 1 - day);
+        d.setDate(d.getDate() + diff);
+        return d;
+    }
+
+    function renderWeekChart() {
+        const chart = document.getElementById('weekChart');
+        const avgEl = document.getElementById('weekAvg');
+        if (!chart) return;
+        chart.innerHTML = '';
+        const days = [];
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const key = localDateStr(d);
+            const r = appData.dailyReviews[key];
+            days.push({ key: key, label: '日一二三四五六'.charAt(d.getDay()), score: r ? r.score : null, isToday: key === todayStr });
+        }
+        days.forEach(function (day) {
+            const col = document.createElement('button');
+            col.type = 'button';
+            col.className = 'week-col' + (day.isToday ? ' is-today' : '');
+            col.setAttribute('aria-label', day.key + (day.score == null ? ' 未评分' : ' ' + day.score + '分'));
+            const bar = document.createElement('div');
+            bar.className = 'week-col-bar';
+            const fill = document.createElement('span');
+            const h = day.score == null ? 4 : Math.max(6, Math.round(day.score / 100 * 46));
+            fill.style.height = h + 'px';
+            fill.style.background = day.score != null ? hpColor(day.score) : '#e1e5e8';
+            bar.appendChild(fill);
+            const lab = document.createElement('span');
+            lab.className = 'week-col-lab';
+            lab.textContent = day.label;
+            col.appendChild(bar);
+            col.appendChild(lab);
+            col.addEventListener('click', function () {
+                reviewDate = day.key;
+                renderMePage();
+            });
+            chart.appendChild(col);
+        });
+        const start = weekStart(new Date());
+        const weekScores = [];
+        for (let i = 0; i < 7; i++) {
+            const d = new Date(start.getTime());
+            d.setDate(start.getDate() + i);
+            const key = localDateStr(d);
+            if (key > todayStr) break;
+            const r = appData.dailyReviews[key];
+            if (r && r.updatedAt) weekScores.push(r.score);
+        }
+        if (avgEl) {
+            if (!weekScores.length) avgEl.textContent = '—';
+            else avgEl.textContent = String(Math.round(weekScores.reduce(function (a, b) { return a + b; }, 0) / weekScores.length));
+        }
+    }
+
+    function addQuote() {
+        const input = document.getElementById('quoteInput');
+        const text = (input && input.value || '').trim();
+        if (!text) return;
+        refreshTodayStr();
+        const now = Date.now();
+        appData.quotes.push({
+            id: now,
+            text: text.slice(0, 200),
+            createdAt: now,
+            updatedAt: now,
+            date: todayStr,
+            pinned: false,
+            pinnedAt: 0
+        });
+        if (input) input.value = '';
+        saveData();
+        renderQuotes();
+    }
+
+    function sortedQuotes() {
+        const list = appData.quotes.slice();
+        list.sort(function (a, b) {
+            if (!!a.pinned !== !!b.pinned) return a.pinned ? -1 : 1;
+            if (a.pinned && b.pinned) return (b.pinnedAt || 0) - (a.pinnedAt || 0);
+            return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+        return list;
+    }
+
+    function renderQuotes() {
+        const box = document.getElementById('quoteList');
+        if (!box) return;
+        const q = ((document.getElementById('quoteSearch') || {}).value || '').trim().toLowerCase();
+        const list = sortedQuotes().filter(function (item) {
+            return !q || item.text.toLowerCase().indexOf(q) !== -1;
+        });
+        box.innerHTML = '';
+        if (!list.length) {
+            const empty = document.createElement('div');
+            empty.className = 'quote-empty';
+            empty.textContent = q ? '没有找到匹配的语录' : '一句提醒，就能把自己轻轻推向前。置顶的句子会在每天第一次打开时出现。';
+            box.appendChild(empty);
+            return;
+        }
+        list.forEach(function (item) {
+            const card = document.createElement('div');
+            card.className = 'quote-card' + (item.pinned ? ' is-pinned' : '');
+            card.setAttribute('data-id', String(item.id));
+            const text = document.createElement('p');
+            text.className = 'quote-text';
+            text.textContent = item.text;
+            const meta = document.createElement('div');
+            meta.className = 'quote-meta';
+            const date = document.createElement('span');
+            date.className = 'date';
+            date.textContent = (item.pinned ? '开机程序 · ' : '') + item.date;
+            meta.appendChild(date);
+            [['pin', item.pinned ? '取消置顶' : '置顶'], ['edit', '编辑'], ['del', '删除']].forEach(function (pair) {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = pair[0] === 'pin' ? 'pin-btn' : '';
+                b.setAttribute('data-q-action', pair[0]);
+                b.setAttribute('data-id', String(item.id));
+                b.textContent = pair[1];
+                meta.appendChild(b);
+            });
+            card.appendChild(text);
+            card.appendChild(meta);
+            box.appendChild(card);
+        });
+    }
+
+    function findQuote(id) {
+        return appData.quotes.find(function (q) { return q.id === id; });
+    }
+
+    function togglePinQuote(id) {
+        const q = findQuote(id);
+        if (!q) return;
+        q.pinned = !q.pinned;
+        q.pinnedAt = q.pinned ? Date.now() : 0;
+        saveData();
+        renderQuotes();
+    }
+
+    function editQuote(id, card) {
+        const q = findQuote(id);
+        if (!q || !card) return;
+        const ta = document.createElement('textarea');
+        ta.value = q.text;
+        ta.maxLength = 200;
+        const old = card.querySelector('.quote-text');
+        if (old) old.replaceWith(ta);
+        ta.focus();
+        const save = function () {
+            const next = ta.value.trim().slice(0, 200);
+            if (next) {
+                q.text = next;
+                q.updatedAt = Date.now();
+            }
+            saveData();
+            renderQuotes();
+        };
+        ta.addEventListener('blur', save);
+        ta.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ta.blur(); }
+            if (e.key === 'Escape') { renderQuotes(); }
+        });
+    }
+
+    function deleteQuote(id) {
+        const q = findQuote(id);
+        if (!q) return;
+        showConfirm('删掉这句语录？', { danger: true, okText: '删除' }).then(function (ok) {
+            if (!ok) return;
+            appData.quotes = appData.quotes.filter(function (x) { return x.id !== id; });
+            if (!appData.deletedQuoteIds) appData.deletedQuoteIds = [];
+            if (appData.deletedQuoteIds.indexOf(id) === -1) appData.deletedQuoteIds.push(id);
+            saveData();
+            renderQuotes();
+        });
+    }
+
+    function maybeShowBoot() {
+        if (isRunning || isResting || isImmersive) return;
+        const pinned = sortedQuotes().filter(function (q) { return q.pinned; });
+        if (!pinned.length) return;
+        if (appData.bootShownDate === todayStr) return;
+        const list = document.getElementById('bootList');
+        const mask = document.getElementById('bootMask');
+        if (!list || !mask) return;
+        list.innerHTML = '';
+        pinned.forEach(function (q) {
+            const li = document.createElement('li');
+            li.textContent = q.text;
+            list.appendChild(li);
+        });
+        mask.classList.add('show');
+    }
+
+    function dismissBoot() {
+        const mask = document.getElementById('bootMask');
+        if (mask) {
+            mask.classList.remove('show');
+        }
+        appData.bootShownDate = todayStr;
+        saveData();
+    }
+
+
+    const SYNC_KEY = 'pomodoro_sync_v1';
+    const GIST_API = 'https://api.github.com';
+    const GIST_FILE = 'pomodoro.json';
+    const SYNC_DEBOUNCE_MS = 2000;
+    var syncCreds = { token: '', gistId: '' };
+    var syncUi = { kind: '', text: '', lastSyncAt: 0 };
+    var syncTimer = 0;
+    var syncInFlight = false;
+    var syncAgain = false;
+    var syncDirty = false;
+
+    function loadSyncCreds() {
+        try {
+            const raw = localStorage.getItem(SYNC_KEY);
+            if (!raw) return;
+            const o = JSON.parse(raw);
+            if (!o || typeof o !== 'object') return;
+            if (typeof o.token === 'string') syncCreds.token = o.token;
+            if (typeof o.gistId === 'string') syncCreds.gistId = o.gistId;
+            if (Number(o.lastSyncAt)) syncUi.lastSyncAt = Number(o.lastSyncAt);
+        } catch (err) { /* ignore broken creds */ }
+    }
+    function persistSyncCreds() {
+        const rec = { gistId: syncCreds.gistId || '', lastSyncAt: syncUi.lastSyncAt || 0 };
+        if (syncCreds.token) rec.token = syncCreds.token;
+        try { localStorage.setItem(SYNC_KEY, JSON.stringify(rec)); } catch (err) { /* ignore */ }
+    }
+    function clearSyncToken() {
+        syncCreds.token = '';
+        try {
+            const rec = { gistId: syncCreds.gistId || '', lastSyncAt: 0 };
+            localStorage.setItem(SYNC_KEY, JSON.stringify(rec));
+        } catch (err) { /* ignore */ }
+    }
+    function relativeSyncTime(ts) {
+        if (!ts) return '';
+        const sec = Math.max(0, Math.round((Date.now() - ts) / 1000));
+        if (sec < 20) return '刚刚';
+        if (sec < 60) return sec + ' 秒前';
+        const min = Math.round(sec / 60);
+        if (min < 60) return min + ' 分钟前';
+        const hr = Math.round(min / 60);
+        if (hr < 24) return hr + ' 小时前';
+        return formatSaveTime(ts);
+    }
+    function setSyncStatus(kind, text, synced) {
+        syncUi.kind = kind || '';
+        syncUi.text = text || '';
+        if (synced) {
+            syncUi.lastSyncAt = Date.now();
+            persistSyncCreds();
+        }
+        const line = document.getElementById('syncStatus');
+        if (line) {
+            line.textContent = text || '';
+            line.className = 'sync-status' + (kind ? ' is-' + kind : '');
+        }
+        const me = document.getElementById('meSyncStatus');
+        if (me) {
+            if (!syncCreds.token && !text) {
+                me.hidden = true;
+                me.textContent = '';
+                me.className = 'me-sync-status';
+            } else {
+                me.hidden = false;
+                me.textContent = text || '';
+                me.className = 'me-sync-status' + (kind ? ' is-' + kind : '');
+            }
+        }
+    }
+    function refreshSyncStatusLine() {
+        if (syncUi.kind === 'ok' && syncUi.lastSyncAt) {
+            setSyncStatus('ok', '已同步 · ' + relativeSyncTime(syncUi.lastSyncAt));
+        }
+    }
+    function fillSyncForm() {
+        const tokenEl = document.getElementById('syncToken');
+        const idEl = document.getElementById('syncGistId');
+        if (tokenEl) {
+            tokenEl.value = '';
+            tokenEl.placeholder = syncCreds.token ? '已保存密钥，无需再填' : '粘贴 GitHub 密钥（只填一次）';
+        }
+        if (idEl && syncCreds.gistId) idEl.value = syncCreds.gistId;
+        const disc = document.getElementById('syncDisconnectBtn');
+        if (disc) disc.style.display = syncCreds.token ? '' : 'none';
+        if (syncUi.text) setSyncStatus(syncUi.kind, syncUi.text);
+        else if (syncCreds.token && syncUi.lastSyncAt) setSyncStatus('ok', '已同步 · ' + relativeSyncTime(syncUi.lastSyncAt));
+        else if (syncCreds.token) setSyncStatus('', '已保存密钥，等待同步…');
+        else setSyncStatus('', '');
+    }
+    function buildSyncPayload() {
+        const settings = Object.assign({}, appData.settings || {});
+        delete settings.githubToken;
+        delete settings.gistToken;
+        delete settings.token;
+        return {
+            app: APP_TITLE,
+            version: 6,
+            syncedAt: new Date().toISOString(),
+            data: {
+                tasks: appData.tasks,
+                dailyStats: appData.dailyStats,
+                settings: settings,
+                currentTaskId: appData.currentTaskId,
+                dailyReviews: appData.dailyReviews,
+                quotes: appData.quotes,
+                bootShownDate: appData.bootShownDate,
+                deletedQuoteIds: appData.deletedQuoteIds,
+                deletedTaskIds: appData.deletedTaskIds,
+                meta: appData.meta
+            }
+        };
+    }
+    function payloadFingerprint(payload) {
+        const d = payload && payload.data ? payload.data : {};
+        return JSON.stringify({
+            tasks: d.tasks,
+            dailyStats: d.dailyStats,
+            settings: d.settings,
+            currentTaskId: d.currentTaskId,
+            dailyReviews: d.dailyReviews,
+            quotes: d.quotes,
+            bootShownDate: d.bootShownDate,
+            deletedQuoteIds: d.deletedQuoteIds,
+            deletedTaskIds: d.deletedTaskIds
+        });
+    }
+    function applyRemoteData(remote) {
+        const raw = (remote && remote.data && typeof remote.data === 'object') ? remote.data : remote;
+        if (!raw || typeof raw !== 'object') return false;
+        const remoteData = defaultAppDataMerged(raw);
+        const before = payloadFingerprint({ data: appData });
+        const keepTimer = appData.timer;
+        const running = isRunning || isResting;
+        appData = mergeAppData(appData, remoteData);
+        if (running) appData.timer = keepTimer;
+        const after = payloadFingerprint({ data: appData });
+        saveData({ fromSync: true });
+        renderTodayTasks();
+        updateCurrentTaskDisplay();
+        updateHomeStats();
+        updateSettingsForm();
+        if (!running) {
+            updateUI();
+            updateMainButton();
+        }
+        if (document.getElementById('page-history') && document.getElementById('page-history').classList.contains('active')) renderCalendar();
+        if (document.getElementById('page-me') && document.getElementById('page-me').classList.contains('active')) renderMePage();
+        else updateSaveStatus();
+        return before !== after;
+    }
+    function readGistContent(gist) {
+        if (!gist || !gist.files) return null;
+        let file = gist.files[GIST_FILE];
+        if (!file) {
+            const names = Object.keys(gist.files);
+            file = names.length ? gist.files[names[0]] : null;
+        }
+        if (!file) return null;
+        const text = file.content;
+        if (!text && file.truncated && file.raw_url) return { truncated: true, raw: file.raw_url };
+        if (typeof text !== 'string' || !text) return null;
+        return { data: JSON.parse(text) };
+    }
+    function gistHeaders() {
+        return {
+            'Accept': 'application/vnd.github+json',
+            'Authorization': 'Bearer ' + syncCreds.token,
+            'X-GitHub-Api-Version': '2022-11-28',
+            'Content-Type': 'application/json'
+        };
+    }
+    function explainSyncError(res) {
+        if (!res) return { kind: 'warn', text: '同步暂时失败，稍后再试' };
+        if (res.status === 401) return { kind: 'err', text: '密钥无效' };
+        if (res.status === 403 || res.status === 429) return { kind: 'warn', text: '同步太频繁，稍后再试' };
+        if (res.status === 404) return { kind: 'err', text: '找不到这本同步笔记，请检查编号' };
+        return { kind: 'warn', text: '同步暂时失败，稍后再试' };
+    }
+    function scheduleSync(reason) {
+        if (!syncCreds.token) return;
+        if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+            setSyncStatus('warn', '离线，稍后同步');
+            return;
+        }
+        clearTimeout(syncTimer);
+        const delay = (reason === 'immediate' || reason === 'open' || reason === 'online') ? 80 : SYNC_DEBOUNCE_MS;
+        syncTimer = setTimeout(function () { runSync(reason); }, delay);
+    }
+    function runSync(reason) {
+        if (!syncCreds.token) return;
+        if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+            setSyncStatus('warn', '离线，稍后同步');
+            return;
+        }
+        if (syncInFlight) { syncAgain = true; return; }
+        syncInFlight = true;
+        setSyncStatus('', '正在同步…');
+        const chain = (!syncCreds.gistId ? createGist() : Promise.resolve())
+            .then(function () { return pullAndPush(); })
+            .then(function () {
+                setSyncStatus('ok', '已同步 · 刚刚', true);
+                syncDirty = false;
+                fillSyncForm();
+            })
+            .catch(function (err) {
+                if (err && err.offline) {
+                    setSyncStatus('warn', '离线，稍后同步');
+                    return;
+                }
+                const info = (err && err.syncMessage) ? err.syncMessage : explainSyncError(err && err.response);
+                setSyncStatus(info.kind || 'warn', info.text || '同步暂时失败，稍后再试');
+            })
+            .then(function () {
+                syncInFlight = false;
+                if (syncAgain) {
+                    syncAgain = false;
+                    scheduleSync('immediate');
+                }
+            });
+        return chain;
+    }
+    function rejectHttp(res) {
+        const info = explainSyncError(res);
+        const e = new Error('sync');
+        e.response = res;
+        e.syncMessage = info;
+        return Promise.reject(e);
+    }
+    function gistFetch(path, opts) {
+        opts = opts || {};
+        return fetch(GIST_API + path, {
+            method: opts.method || 'GET',
+            headers: gistHeaders(),
+            body: opts.body ? JSON.stringify(opts.body) : undefined
+        }).then(function (res) {
+            if (!res.ok) return rejectHttp(res);
+            if (res.status === 204) return null;
+            return res.json();
+        }).catch(function (err) {
+            if (err && err.syncMessage) return Promise.reject(err);
+            const e = new Error('network');
+            e.offline = (typeof navigator !== 'undefined' && navigator.onLine === false);
+            if (!e.offline) e.syncMessage = { kind: 'warn', text: '同步暂时失败，稍后再试' };
+            return Promise.reject(e);
+        });
+    }
+    function createGist() {
+        const body = {
+            public: false,
+            description: '番茄专注 · 私有同步本（请勿公开）',
+            files: {}
+        };
+        body.files[GIST_FILE] = { content: JSON.stringify(buildSyncPayload(), null, 2) };
+        return gistFetch('/gists', { method: 'POST', body: body }).then(function (gist) {
+            if (!gist || !gist.id) throw new Error('no-id');
+            syncCreds.gistId = gist.id;
+            persistSyncCreds();
+            const idEl = document.getElementById('syncGistId');
+            if (idEl) idEl.value = gist.id;
+            showToast('已建立同步本，请把编号填到另一台设备');
+        });
+    }
+    function pullAndPush() {
+        if (!syncCreds.gistId) return Promise.resolve();
+        return gistFetch('/gists/' + encodeURIComponent(syncCreds.gistId)).then(function (gist) {
+            let parsed;
+            try { parsed = readGistContent(gist); } catch (err) { parsed = null; }
+            const next = function (remote) {
+                if (remote) applyRemoteData(remote);
+                const localPayload = buildSyncPayload();
+                const same = remote && payloadFingerprint(localPayload) === payloadFingerprint(remote);
+                if (same && !syncDirty) return;
+                const body = { files: {} };
+                body.files[GIST_FILE] = { content: JSON.stringify(localPayload, null, 2) };
+                return gistFetch('/gists/' + encodeURIComponent(syncCreds.gistId), { method: 'PATCH', body: body });
+            };
+            if (parsed && parsed.truncated && parsed.raw) {
+                return fetch(parsed.raw).then(function (r) {
+                    if (!r.ok) return rejectHttp(r);
+                    return r.json();
+                }).then(next);
+            }
+            return next(parsed && parsed.data ? parsed.data : null);
+        });
+    }
+    function connectSync() {
+        const tokenEl = document.getElementById('syncToken');
+        const idEl = document.getElementById('syncGistId');
+        const typed = tokenEl ? String(tokenEl.value || '').trim() : '';
+        if (typed) syncCreds.token = typed;
+        if (idEl) syncCreds.gistId = String(idEl.value || '').trim();
+        if (!syncCreds.token) {
+            setSyncStatus('err', '请先粘贴密钥');
+            return;
+        }
+        persistSyncCreds();
+        if (tokenEl) {
+            tokenEl.value = '';
+            tokenEl.placeholder = '已保存密钥，无需再填';
+        }
+        fillSyncForm();
+        scheduleSync('immediate');
+    }
+    function disconnectSync() {
+        showConfirm('断开同步并在这台设备上忘记密钥？本机记录还在，同步本也不会被删除。', { danger: true, okText: '断开' }).then(function (ok) {
+            if (!ok) return;
+            clearTimeout(syncTimer);
+            syncAgain = false;
+            clearSyncToken();
+            const tokenEl = document.getElementById('syncToken');
+            if (tokenEl) {
+                tokenEl.value = '';
+                tokenEl.placeholder = '粘贴 GitHub 密钥（只填一次）';
+            }
+            fillSyncForm();
+            setSyncStatus('', '已断开同步');
+            const me = document.getElementById('meSyncStatus');
+            if (me) { me.hidden = true; me.textContent = ''; }
+            showToast('已忘记密钥，本机记录还在');
+        });
+    }
+    function copyGistId() {
+        const id = (document.getElementById('syncGistId') || {}).value || syncCreds.gistId || '';
+        if (!id) {
+            showToast('还没有同步本编号');
+            return;
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(id).then(function () { showToast('已复制编号'); })
+                .catch(function () { fallbackCopy(id); });
+        } else fallbackCopy(id);
+    }
+
+    function init() {
+        loadData();
+        loadSyncCreds();
+        todayStr = localDateStr();
+        reviewDate = todayStr;
+        const now = new Date();
+        viewYear = now.getFullYear();
+        viewMonth = now.getMonth();
+        installManifest();
+        bindEvents();
+        updateSettingsForm();
+        restoreTimer();
+        renderTodayTasks();
+        updateCurrentTaskDisplay();
+        updateHomeStats();
+        updateUI();
+        updateMainButton();
+        maybeShowBoot();
+        updateSaveStatus();
+        requestPersistentStorage();
+        fillSyncForm();
+        if (syncCreds.token) scheduleSync('open');
+        setInterval(refreshSyncStatusLine, 30000);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+</script>
+</body>
+</html>
